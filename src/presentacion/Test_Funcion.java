@@ -40,12 +40,12 @@ public class Test_Funcion {
                 System.out.println("\nNo se encontró la función con ID " + idBuscar);
             }
 
-            /*
+            
             // Uncomment to delete the function
             int idEliminar = nuevaFuncion.getIdFuncion();
             funcionDAO.eliminar(idEliminar);
             System.out.println("Funcion con ID " + idEliminar + " eliminada.");
-            */
+            
         } catch (Exception e) {
             System.err.println("Error: " + e.getMessage());
             e.printStackTrace();
