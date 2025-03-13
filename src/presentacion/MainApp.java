@@ -13,12 +13,12 @@ public class MainApp {
         ClienteDAO dao = new ClienteDAO();
 
         // Insertar con resultado exitoso
-        dao.insertarCliente("Josh", "Palacios", "jPal.23@gmail.com", "555-1234", 2);
-     // dao.insertarCliente("Alex", "Perez", "Alex.Perez@gmail.com", "555-1234", 2); datos de prueba clase
+        //dao.insertarCliente("Josh", "Palacios", "jPal.23@gmail.com", "555-1234", 2);
+     dao.insertarCliente("Alex", "Perez", "Alex.Perez@gmail.com", "555-1234", 2); // datos de prueba clase
 
         // Insertar con resultado fallido (valores nulos en la insercion)
-        dao.insertarCliente("Patricia", "Rodriguez", "patricia.rod@gmail.com", null, null); // el telefono no puede ser nulo
-     // dao.insertarCliente("Josh", "Palacios", "jPal.23@gmail.com", null, null); // datos de prueba
+        // dao.insertarCliente("Patricia", "Rodriguez", "patricia.rod@gmail.com", null, null); // el telefono no puede ser nulo
+        dao.insertarCliente("Josh", "Palacios", "jPal.23@gmail.com", null, null);
         
         // Obtener y mostrar todos los clientes registrados en la base de datos
         System.out.println("\nLista de clientes actualizada:");
