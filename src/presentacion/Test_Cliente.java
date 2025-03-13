@@ -5,7 +5,7 @@ import entidades.Cliente;
 import java.util.List;
 import accesoDatos.ConexionSQL;
 
-public class MainApp {
+public class Test_Cliente {
     public static void main(String[] args) {
         // Crear una instancia de ClienteDAO
         ClienteDAO dao = new ClienteDAO();
