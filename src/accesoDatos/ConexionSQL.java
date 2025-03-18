@@ -17,21 +17,35 @@ public class ConexionSQL {
      * @return Devuelve un objeto `Connection` si la conexión es exitosa, de lo contrario devuelve `null`.
      */
     public static Connection conectar() {
-        try {
-            // Se establece la conexión usando la URL definida anteriormente
+           try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             Connection conn = DriverManager.getConnection(URL);
-            
-            // Mensaje de éxito si la conexión se establece correctamente
             System.out.println("Conexión a SQL Server establecida.");
-            
-            // Se retorna la conexión activa
             return conn;
+        } catch (ClassNotFoundException e) {
+            System.out.println("Error: No se encontró el driver de SQL Server.");
+            return null;
         } catch (SQLException e) {
-            // Si hay un error, se captura y se muestra un mensaje en consola
             System.out.println("Error de conexión: " + e.getMessage());
-            
-            // Se retorna `null` para indicar que no se pudo conectar
             return null;
         }
     }
-}
+        
+       // try {
+            // Se establece la conexión usando la URL definida anteriormente
+           // Connection conn = DriverManager.getConnection(URL);
+            
+            // Mensaje de éxito si la conexión se establece correctamente
+            //System.out.println("Conexión a SQL Server establecida.");
+            
+            // Se retorna la conexión activa
+           // return conn;
+       // } catch (SQLException e) {
+            // Si hay un error, se captura y se muestra un mensaje en consola
+           // System.out.println("Error de conexión: " + e.getMessage());
+            
+            // Se retorna `null` para indicar que no se pudo conectar
+         // return null;
+        }
+    
+
