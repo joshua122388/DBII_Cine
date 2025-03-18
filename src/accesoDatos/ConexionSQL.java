@@ -11,7 +11,6 @@ public class ConexionSQL {
     
     // URL de conexión a SQL Server
     // Contiene los datos necesarios para conectarse a la base de datos
-    // xD
     private static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=cine;user=sa;password=Tamara28;encrypt=false;trustServerCertificate=true";
 
     /**
