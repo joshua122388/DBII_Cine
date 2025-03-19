@@ -2,10 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package presentacion;
 
-import accesoDatos.ConexionSQL;
-import java.awt.HeadlessException;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -37,10 +35,10 @@ public class LoginWindow extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         txtUsuario = new javax.swing.JTextField();
         lblPassword = new javax.swing.JLabel();
-        txtPassword = new javax.swing.JTextField();
         btnLogin = new javax.swing.JButton();
         lblMensaje = new javax.swing.JLabel();
         lblCineBienvenida = new javax.swing.JLabel();
+        txtPassword = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -51,13 +49,6 @@ public class LoginWindow extends javax.swing.JFrame {
 
         lblPassword.setText("Constraseña:");
         getContentPane().add(lblPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 110, -1, -1));
-
-        txtPassword.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPasswordActionPerformed(evt);
-            }
-        });
-        getContentPane().add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 140, 100, -1));
 
         btnLogin.setText("Login");
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
@@ -73,15 +64,15 @@ public class LoginWindow extends javax.swing.JFrame {
         lblCineBienvenida.setText("Bienvenido al Sistema de Gestión de Cine");
         getContentPane().add(lblCineBienvenida, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 10, -1, -1));
 
+        txtPassword.setText("jPasswordField1");
+        getContentPane().add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 140, -1, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtPasswordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPasswordActionPerformed
-
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-         String usuario = txtUsuario.getText();
+               // TODO add your handling code here:
+               String usuario = txtUsuario.getText();
     String password = new String(txtPassword.getPassword());
     
     try {
@@ -91,7 +82,7 @@ public class LoginWindow extends javax.swing.JFrame {
             return;
         }
         
-        String query = "SELECT * FROM Usuarios WHERE usuario = ? AND [password] = ?";
+        String query = "SELECT * FROM Usuarios WHERE usuario = ? AND password = ?";
         PreparedStatement stmt = conn.prepareStatement(query);
         stmt.setString(1, usuario);
         stmt.setString(2, password);
@@ -106,12 +97,15 @@ public class LoginWindow extends javax.swing.JFrame {
             lblMensaje.setText("Usuario o contraseña incorrectos");
         }
         
+        rs.close();
+        stmt.close();
         conn.close(); // Cerrar la conexión cuando se termine
-    } catch (HeadlessException | SQLException ex) {
+    } catch (SQLException ex) {
+        ex.printStackTrace();
         lblMensaje.setText("Error en la conexión: " + ex.getMessage());
-    }                               
-    
-    }        // TODO add your handling code here:
+    }
+
+
     }//GEN-LAST:event_btnLoginActionPerformed
 
     /**
@@ -156,7 +150,7 @@ public class LoginWindow extends javax.swing.JFrame {
     private javax.swing.JLabel lblCineBienvenida;
     private javax.swing.JLabel lblMensaje;
     private javax.swing.JLabel lblPassword;
-    private javax.swing.JTextField txtPassword;
+    private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
 

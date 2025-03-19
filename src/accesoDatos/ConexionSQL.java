@@ -11,7 +11,8 @@ public class ConexionSQL {
     
     // URL de conexión a SQL Server
     // Contiene los datos necesarios para conectarse a la base de datos
-    private static final String URL = "jdbc:sqlserver://localhost\\SQLEXPRESS:1433;databaseName=cine;user=sa;password=Tamara28;encrypt=false;trustServerCertificate=true";
+    private static final String URL = "jdbc:sqlserver://localhost:1433;databaseName=cine;user=sa;password=Tamara28;encrypt=false;trustServerCertificate=true";
+
     /**
      * Método estático para establecer la conexión con la base de datos.
      * @return Devuelve un objeto `Connection` si la conexión es exitosa, de lo contrario devuelve `null`.
