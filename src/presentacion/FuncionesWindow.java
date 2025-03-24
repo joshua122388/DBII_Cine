@@ -18,19 +18,19 @@ public class FuncionesWindow extends javax.swing.JFrame {
      */
     public FuncionesWindow() {
         initComponents();
-         cargarPeliculas(); // Llenar ComboBox con películas
         cargarFunciones(); // Llenar la tabla al abrir la ventana
+        cargarPeliculas(); // Llenar ComboBox con películas
     }
      private void cargarPeliculas() {
         try {
             Connection conn = ConexionSQL.conectar();
-            String query = "SELECT id, titulo FROM Peliculas";
+            String query = "SELECT ID_Pelicula, Titulo FROM pelicula";
             PreparedStatement stmt = conn.prepareStatement(query);
             ResultSet rs = stmt.executeQuery();
-
+            
             cmbPelicula.removeAllItems();
             while (rs.next()) {
-                cmbPelicula.addItem(rs.getInt("id") + " - " + rs.getString("titulo"));
+                cmbPelicula.addItem(rs.getInt("ID_Pelicula") + " - " + rs.getString("Titulo"));
             }
 
             rs.close();
@@ -41,27 +41,43 @@ public class FuncionesWindow extends javax.swing.JFrame {
         }
     }
 
-    private void cargarFunciones() {
-        try {
-            Connection conn = ConexionSQL.conectar();
-            String query = "SELECT * FROM Funciones";
-            PreparedStatement stmt = conn.prepareStatement(query);
-            ResultSet rs = stmt.executeQuery();
+private void cargarFunciones() {
+    try {
+        Connection conn = ConexionSQL.conectar();
+        String query = "SELECT fu.Fecha, pel.Titulo, fu.Hora_Inicio, fu.Duracion, fu.Numero_Sala " +
+                       "FROM funcion fu JOIN pelicula pel ON fu.ID_Pelicula = pel.ID_Pelicula;";
+        PreparedStatement stmt = conn.prepareStatement(query);
+        ResultSet rs = stmt.executeQuery();
 
-            DefaultTableModel model = (DefaultTableModel) tblFunciones.getModel();
-            model.setRowCount(0); // Limpiar tabla
+        // Crear el modelo con nombres de columnas personalizados
+        DefaultTableModel model = new DefaultTableModel(
+            new Object[] { "Fecha", "Título", "Hora Inicio", "Duración", "Número de Sala" }, 0
+        );
 
-            while (rs.next()) {
-                model.addRow(new Object[]{rs.getInt("id"), rs.getInt("pelicula_id"), rs.getString("sala"), rs.getString("horario")});
-            }
-
-            rs.close();
-            stmt.close();
-            conn.close();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Error al cargar funciones: " + ex.getMessage());
+        // Llenar el modelo con los datos del resultset
+        while (rs.next()) {
+            model.addRow(new Object[] {
+                rs.getDate("Fecha"),
+                rs.getString("Titulo"),
+                rs.getTime("Hora_Inicio"),
+                rs.getString("Duracion"),
+                rs.getInt("Numero_Sala")
+            });
         }
-        }
+
+        // Asignar el modelo a la tabla
+        tblFunciones.setModel(model);
+
+        // Cierre de recursos
+        rs.close();
+        stmt.close();
+        conn.close();
+
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Error al cargar funciones: " + ex.getMessage());
+    }
+}
+
         private void agregarFuncion() {
         try {
             Connection conn = ConexionSQL.conectar();
@@ -130,6 +146,7 @@ public class FuncionesWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         lblFunciones = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblFunciones = new javax.swing.JTable();
@@ -149,8 +166,10 @@ public class FuncionesWindow extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         lblFunciones.setText("Funciones del Cine");
-        getContentPane().add(lblFunciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 10, -1, -1));
+        jPanel1.add(lblFunciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 20, -1, -1));
 
         tblFunciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -165,76 +184,42 @@ public class FuncionesWindow extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblFunciones);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 380, 180));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 60, 540, 180));
 
         lblID.setText("ID: ");
-        getContentPane().add(lblID, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, -1, -1));
-        getContentPane().add(txtID, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, -1, -1));
+        jPanel1.add(lblID, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, -1, -1));
+        jPanel1.add(txtID, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 270, -1, -1));
 
         cmbPelicula.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(cmbPelicula, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 260, -1, -1));
+        jPanel1.add(cmbPelicula, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 270, -1, -1));
 
         lblPeliculas.setText("Películas");
-        getContentPane().add(lblPeliculas, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 240, -1, -1));
-        getContentPane().add(txtSala, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 260, -1, -1));
+        jPanel1.add(lblPeliculas, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 250, -1, -1));
+        jPanel1.add(txtSala, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 270, -1, -1));
 
         lblSala.setText("Sala: ");
-        getContentPane().add(lblSala, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 240, -1, -1));
-        getContentPane().add(txtHorario, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 260, -1, -1));
+        jPanel1.add(lblSala, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 250, -1, -1));
+        jPanel1.add(txtHorario, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 270, -1, -1));
 
         jLabel1.setText("Horario: ");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 240, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 250, -1, -1));
 
         btnActualizar.setText("Actualizar");
-        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnActualizarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 310, -1, -1));
+        jPanel1.add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 320, -1, -1));
 
         btnEliminar.setText("Eliminar");
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 310, -1, -1));
+        jPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 320, -1, -1));
 
         btnAgregar.setText("Agregar");
-        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 310, -1, -1));
+        jPanel1.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 320, -1, -1));
 
         btnCargar.setText("Cargar");
-        btnCargar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCargarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnCargar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 310, -1, -1));
+        jPanel1.add(btnCargar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 320, -1, -1));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 840, 490));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
-        cargarFunciones();        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCargarActionPerformed
-
-    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-         agregarFuncion();        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAgregarActionPerformed
-
-    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-        actualizarFuncion();        // TODO add your handling code here:
-    }//GEN-LAST:event_btnActualizarActionPerformed
-
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        eliminarFuncion();        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -278,6 +263,7 @@ public class FuncionesWindow extends javax.swing.JFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JComboBox<String> cmbPelicula;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblFunciones;
     private javax.swing.JLabel lblID;

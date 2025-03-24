@@ -100,19 +100,26 @@ public class MainMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnPeliculasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPeliculasActionPerformed
-       new PeliculasWindow().setVisible(true);   // TODO add your handling code here:
+       VistasCartelera peliculas = new VistasCartelera();
+       peliculas.setVisible(true);
     }//GEN-LAST:event_btnPeliculasActionPerformed
 
     private void btnFuncionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFuncionesActionPerformed
-       new FuncionesWindow().setVisible(true);   // TODO add your handling code here:
+       FuncionesWindow funcion = new FuncionesWindow();
+       funcion.setVisible(true);
+       this.dispose();
     }//GEN-LAST:event_btnFuncionesActionPerformed
 
     private void btnBoletosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBoletosActionPerformed
-         new CompraBoletosWindow().setVisible(true);    // TODO add your handling code here:
+         CompraBoletosWindow boletos = new CompraBoletosWindow();
+         boletos.setVisible(true);
+         this.dispose();
     }//GEN-LAST:event_btnBoletosActionPerformed
 
     private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
-       
+        ClientesWindow clientes = new ClientesWindow();
+        clientes.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnClientesActionPerformed
 
     /**

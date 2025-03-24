@@ -20,6 +20,7 @@ public class VistasCartelera extends javax.swing.JFrame {
      */
     public VistasCartelera() {
         initComponents();
+        cargarCartelera();
         cargarComboPeliculas();
     }
 
@@ -104,7 +105,6 @@ public class VistasCartelera extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         DefaultTableModel = new javax.swing.JTable();
-        btnCargar = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         ElejirPelicula = new javax.swing.JComboBox<>();
         btnFiltroPelicula1 = new javax.swing.JButton();
@@ -130,15 +130,7 @@ public class VistasCartelera extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(DefaultTableModel);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 880, 180));
-
-        btnCargar.setText("Cargar Peliculas");
-        btnCargar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCargarActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnCargar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 80, 140, 50));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 880, 160));
 
         jButton3.setText("Menu Principal");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -146,7 +138,7 @@ public class VistasCartelera extends javax.swing.JFrame {
                 jButton3ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 80, 140, 50));
+        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 290, 140, 50));
 
         ElejirPelicula.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Elije tu pelicula" }));
         ElejirPelicula.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -154,7 +146,7 @@ public class VistasCartelera extends javax.swing.JFrame {
                 ElejirPeliculaMouseClicked(evt);
             }
         });
-        jPanel1.add(ElejirPelicula, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 100, -1, -1));
+        jPanel1.add(ElejirPelicula, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 180, 130, -1));
 
         btnFiltroPelicula1.setText("Aplicar Filtro");
         btnFiltroPelicula1.addActionListener(new java.awt.event.ActionListener() {
@@ -181,10 +173,6 @@ public class VistasCartelera extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
-        cargarCartelera();
-    }//GEN-LAST:event_btnCargarActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
        MainMenu menu = new MainMenu();
@@ -239,7 +227,6 @@ public class VistasCartelera extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable DefaultTableModel;
     private javax.swing.JComboBox<String> ElejirPelicula;
-    private javax.swing.JButton btnCargar;
     private javax.swing.JButton btnFiltroPelicula1;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;

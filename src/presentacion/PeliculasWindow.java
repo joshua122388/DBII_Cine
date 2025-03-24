@@ -20,27 +20,39 @@ public class PeliculasWindow extends javax.swing.JFrame {
         initComponents();
         cargarPeliculas(); // Llenar la tabla al abrir la ventana
     }
-      private void cargarPeliculas() {
-        try {
-            Connection conn = ConexionSQL.conectar();
-            String query = "SELECT * FROM Peliculas";
-            PreparedStatement stmt = conn.prepareStatement(query);
-            ResultSet rs = stmt.executeQuery();
+private void cargarPeliculas() {
+    try {
+        Connection conn = ConexionSQL.conectar();
+        String query = "SELECT ID_Pelicula , Titulo, Genero, Clasificacion FROM Pelicula";
+        PreparedStatement stmt = conn.prepareStatement(query);
+        ResultSet rs = stmt.executeQuery();
 
-            DefaultTableModel model = (DefaultTableModel) tblPeliculas.getModel();
-            model.setRowCount(0); // Limpiar tabla
+        // Definir el modelo con los nombres de columna que deseas
+        DefaultTableModel model = new DefaultTableModel(
+            new Object[] { "ID_Pelicula", "Titulo", "Genero", "Clasificacion" }, 0
+        );
 
-            while (rs.next()) {
-                model.addRow(new Object[]{rs.getInt("id"), rs.getString("titulo"), rs.getString("genero"), rs.getInt("duracion")});
-            }
-
-            rs.close();
-            stmt.close();
-            conn.close();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Error al cargar películas: " + ex.getMessage());
+        // Llenar el modelo con los datos del ResultSet
+        while (rs.next()) {
+            model.addRow(new Object[]{
+                rs.getInt("ID_Pelicula"),
+                rs.getString("Titulo"),
+                rs.getString("Genero"),
+                rs.getString("Clasificacion")
+            });
         }
-        }
+
+        // Asignar el modelo a la tabla
+        tblPeliculas.setModel(model);
+
+        rs.close();
+        stmt.close();
+        conn.close();
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Error al cargar películas: " + ex.getMessage());
+    }
+}
+
          private void agregarPelicula() {
         try {
             Connection conn = ConexionSQL.conectar();
@@ -105,6 +117,7 @@ public class PeliculasWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         lblPeliculas = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPeliculas = new javax.swing.JTable();
@@ -124,8 +137,10 @@ public class PeliculasWindow extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         lblPeliculas.setText("Películas disponibles en el Cine");
-        getContentPane().add(lblPeliculas, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, -1, 30));
+        jPanel1.add(lblPeliculas, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, -1, 30));
 
         tblPeliculas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -140,74 +155,40 @@ public class PeliculasWindow extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblPeliculas);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 370, 170));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 540, 160));
 
         lblID.setText("ID: ");
-        getContentPane().add(lblID, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, -1, -1));
-        getContentPane().add(txtID, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, -1, -1));
+        jPanel1.add(lblID, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 240, -1, -1));
+        jPanel1.add(txtID, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 260, -1, -1));
 
         lblNombre.setText("Título:");
-        getContentPane().add(lblNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 230, -1, -1));
-        getContentPane().add(txtTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 250, -1, -1));
+        jPanel1.add(lblNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 240, -1, -1));
+        jPanel1.add(txtTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 260, -1, -1));
 
         lblGenero.setText("Género: ");
-        getContentPane().add(lblGenero, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 230, -1, -1));
-        getContentPane().add(txtGenero, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 250, -1, -1));
+        jPanel1.add(lblGenero, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 240, -1, -1));
+        jPanel1.add(txtGenero, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 260, -1, -1));
 
         lblDuracion.setText("Duración: ");
-        getContentPane().add(lblDuracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 230, -1, -1));
-        getContentPane().add(txtDuracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 250, -1, -1));
+        jPanel1.add(lblDuracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 240, -1, -1));
+        jPanel1.add(txtDuracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 260, -1, -1));
 
         btnAgregar.setText("Agregar");
-        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, -1, -1));
+        jPanel1.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 300, -1, -1));
 
         btnActualizar.setText("Actualizar");
-        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnActualizarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 290, -1, -1));
+        jPanel1.add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 300, -1, -1));
 
         btnEliminar.setText("Eliminar");
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 290, -1, -1));
+        jPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 300, -1, -1));
 
         btnCargar.setText("Cargar");
-        btnCargar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCargarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnCargar, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 290, -1, -1));
+        jPanel1.add(btnCargar, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 300, -1, -1));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 510));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
-    cargarPeliculas();        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCargarActionPerformed
-
-    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-            agregarPelicula();        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAgregarActionPerformed
-
-    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-        actualizarPelicula();        // TODO add your handling code here:
-    }//GEN-LAST:event_btnActualizarActionPerformed
-
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        eliminarPelicula();        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -249,6 +230,7 @@ public class PeliculasWindow extends javax.swing.JFrame {
     private javax.swing.JButton btnAgregar;
     private javax.swing.JButton btnCargar;
     private javax.swing.JButton btnEliminar;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblDuracion;
     private javax.swing.JLabel lblGenero;

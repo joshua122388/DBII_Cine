@@ -21,7 +21,7 @@ public class ClientesWindow extends javax.swing.JFrame {
          private void cargarClientes() {
         try {
             Connection conn = ConexionSQL.conectar();
-            String query = "SELECT * FROM Clientes";
+            String query = "SELECT * FROM Cliente";
             PreparedStatement stmt = conn.prepareStatement(query);
             ResultSet rs = stmt.executeQuery();
 
@@ -29,7 +29,7 @@ public class ClientesWindow extends javax.swing.JFrame {
             model.setRowCount(0); // Limpiar tabla
 
             while (rs.next()) {
-                model.addRow(new Object[]{rs.getInt("id"), rs.getString("nombre"), rs.getString("correo"), rs.getString("telefono")});
+                model.addRow(new Object[]{rs.getInt("ID_Cliente"), rs.getString("Nombre"), rs.getString("Correo"), rs.getString("Telefono")});
             }
 
             rs.close();
@@ -67,7 +67,7 @@ public class ClientesWindow extends javax.swing.JFrame {
             stmt.setString(1, txtNombre.getText());
             stmt.setString(2, txtCorreo.getText());
             stmt.setString(3, txtTelefono.getText());
-            stmt.setInt(4, Integer.parseInt(txtID.getText()));
+            stmt.setInt(4, Integer.parseInt(txtIDCliente.getText()));
             stmt.executeUpdate();
 
             JOptionPane.showMessageDialog(this, "Cliente actualizado correctamente.");
@@ -84,7 +84,7 @@ public class ClientesWindow extends javax.swing.JFrame {
             Connection conn = ConexionSQL.conectar();
             String query = "DELETE FROM Clientes WHERE id=?";
             PreparedStatement stmt = conn.prepareStatement(query);
-            stmt.setInt(1, Integer.parseInt(txtID.getText()));
+            stmt.setInt(1, Integer.parseInt(txtIDCliente.getText()));
             stmt.executeUpdate();
 
             JOptionPane.showMessageDialog(this, "Cliente eliminado correctamente.");
@@ -113,16 +113,16 @@ public class ClientesWindow extends javax.swing.JFrame {
         lblNombre = new javax.swing.JLabel();
         lblCorreo = new javax.swing.JLabel();
         lblTelefono = new javax.swing.JLabel();
-        txtID = new javax.swing.JTextField();
         txtNombre = new javax.swing.JTextField();
         txtCorreo = new javax.swing.JTextField();
-        txtTelefono = new javax.swing.JTextField();
         btnAgregar = new javax.swing.JButton();
         btnActualizar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnCargar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        txtIDCliente = new javax.swing.JTextField();
+        txtTelefono = new javax.swing.JTextField();
 
         tblClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -156,13 +156,6 @@ public class ClientesWindow extends javax.swing.JFrame {
         lblTelefono.setText("Telefono:");
         jPanel1.add(lblTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 300, -1, -1));
 
-        txtID.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtIDActionPerformed(evt);
-            }
-        });
-        jPanel1.add(txtID, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, -1, -1));
-
         txtNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtNombreActionPerformed(evt);
@@ -170,7 +163,6 @@ public class ClientesWindow extends javax.swing.JFrame {
         });
         jPanel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 330, 110, -1));
         jPanel1.add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 330, 100, -1));
-        jPanel1.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 330, -1, -1));
 
         btnAgregar.setText("Agregar");
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
@@ -218,24 +210,22 @@ public class ClientesWindow extends javax.swing.JFrame {
         jScrollPane2.setViewportView(jTable1);
 
         jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 470, 210));
+        jPanel1.add(txtIDCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, -1, -1));
+        jPanel1.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 330, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 463, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void txtIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIDActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtIDActionPerformed
 
     private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
         // TODO add your handling code here:
@@ -309,7 +299,7 @@ public class ClientesWindow extends javax.swing.JFrame {
     private javax.swing.JLabel lblTelefono;
     private javax.swing.JTable tblClientes;
     private javax.swing.JTextField txtCorreo;
-    private javax.swing.JTextField txtID;
+    private javax.swing.JTextField txtIDCliente;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
