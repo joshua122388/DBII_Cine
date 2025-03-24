@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package presentacion;
+import LogicaNegocio.EncriptadorSHA256;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,6 +11,8 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import accesoDatos.ConexionSQL;
 import presentacion.MainMenu;
+import Seguridad.Encriptador;
+import java.awt.Color;
 /**
  *
  * @author contr
@@ -38,8 +41,9 @@ public class LoginWindow extends javax.swing.JFrame {
         txtUsuario = new javax.swing.JTextField();
         lblPassword = new javax.swing.JLabel();
         txtPassword = new javax.swing.JPasswordField();
-        btnLogin = new javax.swing.JButton();
+        btnRegistro = new javax.swing.JButton();
         lblMensaje = new javax.swing.JLabel();
+        btnLogin1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -56,68 +60,96 @@ public class LoginWindow extends javax.swing.JFrame {
         jPanel1.add(lblPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 130, -1, -1));
         jPanel1.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 160, 110, 30));
 
-        btnLogin.setText("Login");
-        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+        btnRegistro.setText("Registrarse");
+        btnRegistro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLoginActionPerformed(evt);
+                btnRegistroActionPerformed(evt);
             }
         });
-        jPanel1.add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 220, 140, 40));
+        jPanel1.add(btnRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 220, 140, 40));
 
         lblMensaje.setText("Mensaje:");
-        jPanel1.add(lblMensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 290, 120, 20));
+        jPanel1.add(lblMensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 290, 300, 20));
+
+        btnLogin1.setText("Login");
+        btnLogin1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogin1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnLogin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 220, 140, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 511, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        // TODO add your handling code here:
-        String usuario = txtUsuario.getText();
-        String password = new String(txtPassword.getPassword());
+    
+    private void btnRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistroActionPerformed
+        
+        Registro reg = new Registro();
+        reg.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnRegistroActionPerformed
 
-        try {
-            Connection conn = ConexionSQL.conectar(); // Usar la conexión correctamente
-            if (conn == null) {
-                lblMensaje.setText("Error: No se pudo conectar a la base de datos");
-                return;
-            }
+    private void btnLogin1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogin1ActionPerformed
+            String usuario = txtUsuario.getText();
+            String password = new String(txtPassword.getPassword());
 
-            String query = "SELECT * FROM Usuarios WHERE usuario = ? AND password = ?";
-            PreparedStatement stmt = conn.prepareStatement(query);
-            stmt.setString(1, usuario);
-            stmt.setString(2, password);
-            ResultSet rs = stmt.executeQuery();
+    // Encriptamos el password ingresado
+    Encriptador encriptador = new LogicaNegocio.EncriptadorSHA256();
+    String passwordEncriptado = encriptador.encriptarSHA256(password);
 
-            if (rs.next()) {
-                lblMensaje.setText("Inicio de sesión exitoso");
-                JOptionPane.showMessageDialog(this, "Bienvenido " + usuario);
-                this.dispose();
-                new MainMenu().setVisible(true); // Abre el Menú Principal
-            } else {
-                lblMensaje.setText("Usuario o contraseña incorrectos");
-            }
-
-            rs.close();
-            stmt.close();
-            conn.close(); // Cerrar la conexión cuando se termine
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            lblMensaje.setText("Error en la conexión: " + ex.getMessage());
+    try {
+        Connection conn = ConexionSQL.conectar();
+        if (conn == null) {
+            lblMensaje.setText("Error: No se pudo conectar a la base de datos");
+            return;
         }
 
-    }//GEN-LAST:event_btnLoginActionPerformed
+        String query = "SELECT * FROM INGRESO WHERE usuario = ? AND contrasena = ?";
+        PreparedStatement stmt = conn.prepareStatement(query);
+        stmt.setString(1, usuario);
+        stmt.setString(2, passwordEncriptado);
+        ResultSet rs = stmt.executeQuery();
 
+        if (rs.next()) {
+            lblMensaje.setText("Inicio de sesión exitoso");
+            JOptionPane.showMessageDialog(this, "Bienvenido: " + usuario);
+            this.dispose();
+            new MainMenu().setVisible(true);
+        } else {
+            lblMensaje.setForeground(Color.RED);
+            lblMensaje.setText("Llene todos los campos");
+
+            
+        }
+
+        rs.close();
+        stmt.close();
+        conn.close();
+    } catch (SQLException ex) {
+        ex.printStackTrace();
+        lblMensaje.setText("Error en la conexión: " + ex.getMessage());
+    }
+    }//GEN-LAST:event_btnLogin1ActionPerformed
+    
+    
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -155,7 +187,8 @@ public class LoginWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnLogin;
+    private javax.swing.JButton btnLogin1;
+    private javax.swing.JButton btnRegistro;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblCineBienvenida;
