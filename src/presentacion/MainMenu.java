@@ -112,7 +112,7 @@ public class MainMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBoletosActionPerformed
 
     private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
-    new ClientesWindow().setVisible(true);       // TODO add your handling code here:
+       
     }//GEN-LAST:event_btnClientesActionPerformed
 
     /**

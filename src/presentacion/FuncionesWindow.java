@@ -6,6 +6,7 @@ package presentacion;
 import java.sql.*;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import accesoDatos.ConexionSQL;
 /**
  *
  * @author melin
