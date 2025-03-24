@@ -2,8 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-
-
+package presentacion;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,15 +10,14 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import accesoDatos.ConexionSQL;
 import presentacion.MainMenu;
-
 /**
  *
- * @author melin
+ * @author contr
  */
 public class LoginWindow extends javax.swing.JFrame {
 
     /**
-     * Creates new form LoginWindow
+     * Creates new form LoginWindowJ
      */
     public LoginWindow() {
         initComponents();
@@ -34,23 +32,29 @@ public class LoginWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        lblCineBienvenida = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         txtUsuario = new javax.swing.JTextField();
         lblPassword = new javax.swing.JLabel();
+        txtPassword = new javax.swing.JPasswordField();
         btnLogin = new javax.swing.JButton();
         lblMensaje = new javax.swing.JLabel();
-        lblCineBienvenida = new javax.swing.JLabel();
-        txtPassword = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lblCineBienvenida.setText("Bienvenido al Sistema de Gestión de Cine");
+        jPanel1.add(lblCineBienvenida, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, -1, -1));
 
         jLabel1.setText("Usuario:");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 40, -1, -1));
-        getContentPane().add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 70, 110, 30));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 50, -1, -1));
+        jPanel1.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 70, 110, 30));
 
         lblPassword.setText("Constraseña:");
-        getContentPane().add(lblPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 110, -1, -1));
+        jPanel1.add(lblPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 130, -1, -1));
+        jPanel1.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 160, 110, 30));
 
         btnLogin.setText("Login");
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
@@ -58,53 +62,59 @@ public class LoginWindow extends javax.swing.JFrame {
                 btnLoginActionPerformed(evt);
             }
         });
-        getContentPane().add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 190, 120, 40));
+        jPanel1.add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 220, 140, 40));
 
         lblMensaje.setText("Mensaje:");
-        getContentPane().add(lblMensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 250, 120, 20));
+        jPanel1.add(lblMensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 290, 120, 20));
 
-        lblCineBienvenida.setText("Bienvenido al Sistema de Gestión de Cine");
-        getContentPane().add(lblCineBienvenida, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 10, -1, -1));
-        getContentPane().add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 140, 110, 30));
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-               // TODO add your handling code here:
-               String usuario = txtUsuario.getText();
-    String password = new String(txtPassword.getPassword());
-    
-    try {
-        Connection conn = ConexionSQL.conectar(); // Usar la conexión correctamente
-        if (conn == null) {
-            lblMensaje.setText("Error: No se pudo conectar a la base de datos");
-            return;
-        }
-        
-        String query = "SELECT * FROM Usuarios WHERE usuario = ? AND password = ?";
-        PreparedStatement stmt = conn.prepareStatement(query);
-        stmt.setString(1, usuario);
-        stmt.setString(2, password);
-        ResultSet rs = stmt.executeQuery();
-        
-        if (rs.next()) {
-            lblMensaje.setText("Inicio de sesión exitoso");
-            JOptionPane.showMessageDialog(this, "Bienvenido " + usuario);
-            this.dispose();
-            new MainMenu().setVisible(true); // Abre el Menú Principal
-        } else {
-            lblMensaje.setText("Usuario o contraseña incorrectos");
-        }
-        
-        rs.close();
-        stmt.close();
-        conn.close(); // Cerrar la conexión cuando se termine
-    } catch (SQLException ex) {
-        ex.printStackTrace();
-        lblMensaje.setText("Error en la conexión: " + ex.getMessage());
-    }
+        // TODO add your handling code here:
+        String usuario = txtUsuario.getText();
+        String password = new String(txtPassword.getPassword());
 
+        try {
+            Connection conn = ConexionSQL.conectar(); // Usar la conexión correctamente
+            if (conn == null) {
+                lblMensaje.setText("Error: No se pudo conectar a la base de datos");
+                return;
+            }
+
+            String query = "SELECT * FROM Usuarios WHERE usuario = ? AND password = ?";
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setString(1, usuario);
+            stmt.setString(2, password);
+            ResultSet rs = stmt.executeQuery();
+
+            if (rs.next()) {
+                lblMensaje.setText("Inicio de sesión exitoso");
+                JOptionPane.showMessageDialog(this, "Bienvenido " + usuario);
+                this.dispose();
+                new MainMenu().setVisible(true); // Abre el Menú Principal
+            } else {
+                lblMensaje.setText("Usuario o contraseña incorrectos");
+            }
+
+            rs.close();
+            stmt.close();
+            conn.close(); // Cerrar la conexión cuando se termine
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            lblMensaje.setText("Error en la conexión: " + ex.getMessage());
+        }
 
     }//GEN-LAST:event_btnLoginActionPerformed
 
@@ -134,6 +144,7 @@ public class LoginWindow extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(LoginWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -142,15 +153,15 @@ public class LoginWindow extends javax.swing.JFrame {
             }
         });
     }
-}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblCineBienvenida;
     private javax.swing.JLabel lblMensaje;
     private javax.swing.JLabel lblPassword;
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables
-
+}
