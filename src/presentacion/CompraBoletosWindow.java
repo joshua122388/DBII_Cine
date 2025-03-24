@@ -111,51 +111,52 @@ private void btnVerComprasActionPerformed(java.awt.event.ActionEvent evt) {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
         lblCompraboletostitle = new javax.swing.JLabel();
         lblFunciones = new javax.swing.JLabel();
-        cmbFunciones = new javax.swing.JComboBox<>();
         spnCantidad = new javax.swing.JSpinner();
         lblCantidad = new javax.swing.JLabel();
         lblTotal = new javax.swing.JLabel();
-        btnCartelera = new javax.swing.JButton();
-        btnComprar = new javax.swing.JButton();
+        btnAsiento = new javax.swing.JButton();
+        btnComprarBoletos = new javax.swing.JButton();
         btnVerCompras = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblCompras = new javax.swing.JTable();
         btnCalcular1 = new javax.swing.JButton();
+        btnCartelera1 = new javax.swing.JButton();
+        cmbFunciones = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
         lblCompraboletostitle.setText("Compra de Boletos para el Cine");
-        getContentPane().add(lblCompraboletostitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 20, -1, -1));
+        jPanel1.add(lblCompraboletostitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 30, -1, -1));
 
         lblFunciones.setText("Funciones :");
-        getContentPane().add(lblFunciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 90, -1, -1));
-
-        cmbFunciones.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        getContentPane().add(cmbFunciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 90, -1, -1));
-        getContentPane().add(spnCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 130, -1, -1));
+        jPanel1.add(lblFunciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 100, -1, -1));
+        jPanel1.add(spnCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 140, -1, -1));
 
         lblCantidad.setText("Cantidad:");
-        getContentPane().add(lblCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 130, -1, -1));
+        jPanel1.add(lblCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 140, -1, -1));
 
         lblTotal.setText("Total:");
-        getContentPane().add(lblTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 190, -1, -1));
+        jPanel1.add(lblTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 200, -1, -1));
 
-        btnCartelera.setText("Ver Cartelera");
-        btnCartelera.addActionListener(new java.awt.event.ActionListener() {
+        btnAsiento.setText("Selección de Asientos");
+        btnAsiento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCarteleraActionPerformed(evt);
+                btnAsientoActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCartelera, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 240, -1, -1));
+        jPanel1.add(btnAsiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 300, 160, -1));
 
-        btnComprar.setText("Comprar Boletos: ");
-        getContentPane().add(btnComprar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 240, -1, -1));
+        btnComprarBoletos.setText("Comprar Boletos: ");
+        jPanel1.add(btnComprarBoletos, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 250, -1, -1));
 
-        btnVerCompras.setText("Ver Compras : ");
-        getContentPane().add(btnVerCompras, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 290, -1, -1));
+        btnVerCompras.setText("Ver Compras");
+        jPanel1.add(btnVerCompras, new org.netbeans.lib.awtextra.AbsoluteConstraints(102, 300, 150, -1));
 
         tblCompras.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -170,18 +171,26 @@ private void btnVerComprasActionPerformed(java.awt.event.ActionEvent evt) {
         ));
         jScrollPane1.setViewportView(tblCompras);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 320, 110));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 340, 320, 110));
 
         btnCalcular1.setText("Calcular Total");
-        getContentPane().add(btnCalcular1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, -1, -1));
+        jPanel1.add(btnCalcular1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, -1, -1));
+
+        btnCartelera1.setText("Ver Cartelera");
+        jPanel1.add(btnCartelera1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 250, -1, -1));
+
+        cmbFunciones.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel1.add(cmbFunciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, -1, -1));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 520, 510));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCarteleraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarteleraActionPerformed
-        VistasCartelera cartelera = new VistasCartelera();
-        cartelera.setVisible(true);
-    }//GEN-LAST:event_btnCarteleraActionPerformed
+    private void btnAsientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsientoActionPerformed
+        SeleccionAsientos asiento = new SeleccionAsientos();
+        asiento.setVisible(true);
+    }//GEN-LAST:event_btnAsientoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -219,11 +228,13 @@ private void btnVerComprasActionPerformed(java.awt.event.ActionEvent evt) {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAsiento;
     private javax.swing.JButton btnCalcular1;
-    private javax.swing.JButton btnCartelera;
-    private javax.swing.JButton btnComprar;
+    private javax.swing.JButton btnCartelera1;
+    private javax.swing.JButton btnComprarBoletos;
     private javax.swing.JButton btnVerCompras;
     private javax.swing.JComboBox<String> cmbFunciones;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCantidad;
     private javax.swing.JLabel lblCompraboletostitle;

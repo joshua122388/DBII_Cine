@@ -25,7 +25,7 @@ public class SeleccionAsientos extends javax.swing.JFrame {
         initComponents();
         
         
-                setTitle("Selecciona tus asientos");
+                setTitle("Asientos Dispobibles");
         setSize(1100, 800);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);

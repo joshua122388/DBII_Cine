@@ -86,8 +86,6 @@ private void cargarFunciones() {
 
             int peliculaID = Integer.parseInt(cmbPelicula.getSelectedItem().toString().split(" - ")[0]);
             stmt.setInt(1, peliculaID);
-            stmt.setString(2, txtSala.getText());
-            stmt.setString(3, txtHorario.getText());
             stmt.executeUpdate();
 
             JOptionPane.showMessageDialog(this, "Función agregada correctamente.");
@@ -107,9 +105,6 @@ private void cargarFunciones() {
 
             int peliculaID = Integer.parseInt(cmbPelicula.getSelectedItem().toString().split(" - ")[0]);
             stmt.setInt(1, peliculaID);
-            stmt.setString(2, txtSala.getText());
-            stmt.setString(3, txtHorario.getText());
-            stmt.setInt(4, Integer.parseInt(txtID.getText()));
             stmt.executeUpdate();
 
             JOptionPane.showMessageDialog(this, "Función actualizada correctamente.");
@@ -126,7 +121,6 @@ private void cargarFunciones() {
             Connection conn = ConexionSQL.conectar();
             String query = "DELETE FROM Funciones WHERE id=?";
             PreparedStatement stmt = conn.prepareStatement(query);
-            stmt.setInt(1, Integer.parseInt(txtID.getText()));
             stmt.executeUpdate();
 
             JOptionPane.showMessageDialog(this, "Función eliminada correctamente.");
@@ -150,18 +144,11 @@ private void cargarFunciones() {
         lblFunciones = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblFunciones = new javax.swing.JTable();
-        lblID = new javax.swing.JLabel();
-        txtID = new javax.swing.JTextField();
         cmbPelicula = new javax.swing.JComboBox<>();
         lblPeliculas = new javax.swing.JLabel();
-        txtSala = new javax.swing.JTextField();
         lblSala = new javax.swing.JLabel();
-        txtHorario = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        btnActualizar = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
-        btnAgregar = new javax.swing.JButton();
-        btnCargar = new javax.swing.JButton();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        brnFiltro = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -184,39 +171,21 @@ private void cargarFunciones() {
         ));
         jScrollPane1.setViewportView(tblFunciones);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 60, 540, 180));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 610, 180));
 
-        lblID.setText("ID: ");
-        jPanel1.add(lblID, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, -1, -1));
-        jPanel1.add(txtID, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 270, -1, -1));
-
-        cmbPelicula.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel1.add(cmbPelicula, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 270, -1, -1));
+        jPanel1.add(cmbPelicula, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 260, 200, -1));
 
         lblPeliculas.setText("Películas");
-        jPanel1.add(lblPeliculas, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 250, -1, -1));
-        jPanel1.add(txtSala, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 270, -1, -1));
+        jPanel1.add(lblPeliculas, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 260, -1, -1));
 
-        lblSala.setText("Sala: ");
-        jPanel1.add(lblSala, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 250, -1, -1));
-        jPanel1.add(txtHorario, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 270, -1, -1));
+        lblSala.setText("Fecha Función");
+        jPanel1.add(lblSala, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 260, -1, -1));
+        jPanel1.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 260, 160, -1));
 
-        jLabel1.setText("Horario: ");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 250, -1, -1));
+        brnFiltro.setText("Aplicar");
+        jPanel1.add(brnFiltro, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 330, -1, -1));
 
-        btnActualizar.setText("Actualizar");
-        jPanel1.add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 320, -1, -1));
-
-        btnEliminar.setText("Eliminar");
-        jPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 320, -1, -1));
-
-        btnAgregar.setText("Agregar");
-        jPanel1.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 320, -1, -1));
-
-        btnCargar.setText("Cargar");
-        jPanel1.add(btnCargar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 320, -1, -1));
-
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 840, 490));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 830, 460));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -257,21 +226,14 @@ private void cargarFunciones() {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnActualizar;
-    private javax.swing.JButton btnAgregar;
-    private javax.swing.JButton btnCargar;
-    private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton brnFiltro;
     private javax.swing.JComboBox<String> cmbPelicula;
-    private javax.swing.JLabel jLabel1;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblFunciones;
-    private javax.swing.JLabel lblID;
     private javax.swing.JLabel lblPeliculas;
     private javax.swing.JLabel lblSala;
     private javax.swing.JTable tblFunciones;
-    private javax.swing.JTextField txtHorario;
-    private javax.swing.JTextField txtID;
-    private javax.swing.JTextField txtSala;
     // End of variables declaration//GEN-END:variables
 }

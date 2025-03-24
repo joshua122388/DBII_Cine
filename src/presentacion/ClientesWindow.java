@@ -151,14 +151,12 @@ private void eliminarCliente() {
         lblTelefono = new javax.swing.JLabel();
         txtIDCliente = new javax.swing.JTextField();
         txtIDMembresia = new javax.swing.JTextField();
-        btnAgregar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblClentes = new javax.swing.JTable();
         txtNombreCliente = new javax.swing.JTextField();
         txtCorreoCliente = new javax.swing.JTextField();
         btnActualizar = new javax.swing.JButton();
-        btnAgregar1 = new javax.swing.JButton();
         lblTelefono1 = new javax.swing.JLabel();
         txtTelefonoCliente = new javax.swing.JTextField();
 
@@ -203,21 +201,13 @@ private void eliminarCliente() {
         jPanel1.add(txtIDCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 130, -1));
         jPanel1.add(txtIDMembresia, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 300, 170, -1));
 
-        btnAgregar.setText("Agregar");
-        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 320, 100, 40));
-
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 320, 120, 40));
+        jPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 320, 120, 40));
 
         tblClentes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -253,15 +243,7 @@ private void eliminarCliente() {
                 btnActualizarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 320, 110, 40));
-
-        btnAgregar1.setText("Agregar");
-        btnAgregar1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregar1ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnAgregar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 320, 100, 40));
+        jPanel1.add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 320, 110, 40));
 
         lblTelefono1.setText("Telefono:");
         jPanel1.add(lblTelefono1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, -1, -1));
@@ -289,12 +271,9 @@ private void eliminarCliente() {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtIDClienteActionPerformed
 
-    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        agregarCliente();       // TODO add your handling code here:
-    }//GEN-LAST:event_btnAgregarActionPerformed
-
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        eliminarCliente();        // TODO add your handling code here:
+        eliminarCliente();
+        cargarClientes();// TODO add your handling code here:
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void txtNombreClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreClienteActionPerformed
@@ -314,10 +293,6 @@ private void eliminarCliente() {
     
     actualizarCliente(); // Llama al método ya existente
     }//GEN-LAST:event_btnActualizarActionPerformed
-
-    private void btnAgregar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregar1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAgregar1ActionPerformed
     
     
     private void tblClentesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClentesMouseClicked
@@ -380,8 +355,6 @@ private void eliminarCliente() {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
-    private javax.swing.JButton btnAgregar;
-    private javax.swing.JButton btnAgregar1;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
