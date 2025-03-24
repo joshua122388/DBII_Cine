@@ -45,10 +45,10 @@ public class LoginWindow extends javax.swing.JFrame {
 
         jLabel1.setText("Usuario:");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 40, -1, -1));
-        getContentPane().add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, 80, -1));
+        getContentPane().add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 70, 110, 30));
 
         lblPassword.setText("Constraseña:");
-        getContentPane().add(lblPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 110, -1, -1));
+        getContentPane().add(lblPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 110, -1, -1));
 
         btnLogin.setText("Login");
         btnLogin.addActionListener(new java.awt.event.ActionListener() {
@@ -56,16 +56,14 @@ public class LoginWindow extends javax.swing.JFrame {
                 btnLoginActionPerformed(evt);
             }
         });
-        getContentPane().add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 190, 120, 20));
+        getContentPane().add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 190, 120, 40));
 
         lblMensaje.setText("Mensaje:");
-        getContentPane().add(lblMensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 230, 80, 20));
+        getContentPane().add(lblMensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 250, 120, 20));
 
         lblCineBienvenida.setText("Bienvenido al Sistema de Gestión de Cine");
         getContentPane().add(lblCineBienvenida, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 10, -1, -1));
-
-        txtPassword.setText("jPasswordField1");
-        getContentPane().add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 140, -1, -1));
+        getContentPane().add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 140, 110, 30));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

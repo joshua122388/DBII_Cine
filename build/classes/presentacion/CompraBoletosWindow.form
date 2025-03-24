@@ -92,13 +92,16 @@
         </Constraint>
       </Constraints>
     </Component>
-    <Component class="javax.swing.JButton" name="btnCalcular">
+    <Component class="javax.swing.JButton" name="btnCartelera">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Calcular Total"/>
+        <Property name="text" type="java.lang.String" value="Ver Cartelera"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCarteleraActionPerformed"/>
+      </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="10" y="240" width="-1" height="-1"/>
+          <AbsoluteConstraints x="120" y="240" width="-1" height="-1"/>
         </Constraint>
       </Constraints>
     </Component>
@@ -148,5 +151,15 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JButton" name="btnCalcular1">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Calcular Total"/>
+      </Properties>
+      <Constraints>
+        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+          <AbsoluteConstraints x="10" y="240" width="-1" height="-1"/>
+        </Constraint>
+      </Constraints>
+    </Component>
   </SubComponents>
 </Form>

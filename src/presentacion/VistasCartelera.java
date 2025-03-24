@@ -3,6 +3,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package presentacion;
+import accesoDatos.VistaCarteleraDAO;
+import entidades.VistaCartelera;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -15,8 +20,77 @@ public class VistasCartelera extends javax.swing.JFrame {
      */
     public VistasCartelera() {
         initComponents();
+        cargarComboPeliculas();
     }
 
+    private void cargarCartelera() {
+    try {
+        VistaCarteleraDAO dao = new VistaCarteleraDAO();
+        List<VistaCartelera> lista = dao.obtenerCartelera();
+
+        String[] columnas = {"Título", "Género", "Clasificación", "Horarios"};
+        javax.swing.table.DefaultTableModel model = new javax.swing.table.DefaultTableModel(null, columnas);
+
+        for (VistaCartelera vc : lista) {
+            model.addRow(new Object[]{
+                vc.getTitulo(),
+                vc.getGenero(),
+                vc.getClasificacion(),
+                vc.getHorarios()
+            });
+        }
+
+        DefaultTableModel.setModel(model);
+
+    } catch (Exception e) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Error al cargar cartelera: " + e.getMessage());
+    }
+}
+    
+    private void cargarComboPeliculas() {
+    try {
+        VistaCarteleraDAO dao = new VistaCarteleraDAO();
+        List<String> titulos = dao.obtenerTitulosPeliculas();
+
+        for (String titulo : titulos) {
+            ElejirPelicula.addItem(titulo); // Asegurate de que tu JComboBox se llama así
+        }
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error al cargar títulos: " + e.getMessage());
+    }
+}
+    
+    private void aplicarFiltro() {
+    String tituloSeleccionado = ElejirPelicula.getSelectedItem().toString();
+
+    try {
+        VistaCarteleraDAO dao = new VistaCarteleraDAO();
+        List<VistaCartelera> lista = dao.obtenerCartelera(); // o crea un método nuevo que filtre desde SQL
+
+        DefaultTableModel model = new DefaultTableModel(new Object[]{"Título", "Género", "Clasificación", "Horarios"}, 0);
+
+        for (VistaCartelera vc : lista) {
+            if (vc.getTitulo().equalsIgnoreCase(tituloSeleccionado)) {
+                model.addRow(new Object[]{
+                    vc.getTitulo(),
+                    vc.getGenero(),
+                    vc.getClasificacion(),
+                    vc.getHorarios()
+                });
+            }
+        }
+
+        DefaultTableModel.setModel(model);
+
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error al aplicar filtro: " + e.getMessage());
+    }
+}
+
+
+
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -28,10 +102,12 @@ public class VistasCartelera extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
+        DefaultTableModel = new javax.swing.JTable();
+        btnCargar = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        ElejirPelicula = new javax.swing.JComboBox<>();
+        btnFiltroPelicula1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -39,12 +115,9 @@ public class VistasCartelera extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         jLabel1.setText("Cartelera");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 40, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 10, -1, -1));
 
-        jButton1.setText("Menu Principal");
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 40, 140, 50));
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        DefaultTableModel.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -55,30 +128,77 @@ public class VistasCartelera extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(DefaultTableModel);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 880, -1));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 880, 180));
 
-        jButton2.setText("Cargar Peliculas");
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 40, 140, 50));
+        btnCargar.setText("Cargar Peliculas");
+        btnCargar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCargarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnCargar, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 80, 140, 50));
+
+        jButton3.setText("Menu Principal");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 80, 140, 50));
+
+        ElejirPelicula.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Elije tu pelicula" }));
+        ElejirPelicula.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ElejirPeliculaMouseClicked(evt);
+            }
+        });
+        jPanel1.add(ElejirPelicula, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 100, -1, -1));
+
+        btnFiltroPelicula1.setText("Aplicar Filtro");
+        btnFiltroPelicula1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFiltroPelicula1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnFiltroPelicula1, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 230, 140, 50));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 989, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1200, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 605, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 6, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
+        cargarCartelera();
+    }//GEN-LAST:event_btnCargarActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+       MainMenu menu = new MainMenu();
+       menu.setVisible(true);
+       this.dispose();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void ElejirPeliculaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ElejirPeliculaMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ElejirPeliculaMouseClicked
+
+    private void btnFiltroPelicula1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltroPelicula1ActionPerformed
+        aplicarFiltro();
+    }//GEN-LAST:event_btnFiltroPelicula1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -117,11 +237,13 @@ public class VistasCartelera extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JTable DefaultTableModel;
+    private javax.swing.JComboBox<String> ElejirPelicula;
+    private javax.swing.JButton btnCargar;
+    private javax.swing.JButton btnFiltroPelicula1;
+    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

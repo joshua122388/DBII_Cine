@@ -5,6 +5,7 @@
 package presentacion;
 import java.sql.*;
 import javax.swing.JOptionPane;
+import accesoDatos.ConexionSQL;
 /**
  *
  * @author melin
@@ -21,13 +22,13 @@ public class CompraBoletosWindow extends javax.swing.JFrame {
          private void cargarFunciones() {
         try {
             Connection conn = ConexionSQL.conectar();
-            String query = "SELECT id, pelicula_id, sala, horario FROM Funciones";
+            String query = "SELECT ID_Funcion, ID_Pelicula, Numero_Sala, Duracion FROM funcion";
             PreparedStatement stmt = conn.prepareStatement(query);
             ResultSet rs = stmt.executeQuery();
 
             cmbFunciones.removeAllItems();
             while (rs.next()) {
-                cmbFunciones.addItem(rs.getInt("id") + " - Película " + rs.getInt("pelicula_id") + " - Sala " + rs.getString("sala") + " - " + rs.getString("horario"));
+                cmbFunciones.addItem(rs.getInt("ID_Funcion") + " - Película " + rs.getInt("ID_Pelicula") + " - Sala " + rs.getString("Numero_Sala") + " - " + rs.getString("Duracion"));
             }
 
             rs.close();
@@ -115,11 +116,12 @@ private void btnVerComprasActionPerformed(java.awt.event.ActionEvent evt) {
         spnCantidad = new javax.swing.JSpinner();
         lblCantidad = new javax.swing.JLabel();
         lblTotal = new javax.swing.JLabel();
-        btnCalcular = new javax.swing.JButton();
+        btnCartelera = new javax.swing.JButton();
         btnComprar = new javax.swing.JButton();
         btnVerCompras = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblCompras = new javax.swing.JTable();
+        btnCalcular1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -140,8 +142,13 @@ private void btnVerComprasActionPerformed(java.awt.event.ActionEvent evt) {
         lblTotal.setText("Total:");
         getContentPane().add(lblTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 190, -1, -1));
 
-        btnCalcular.setText("Calcular Total");
-        getContentPane().add(btnCalcular, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, -1, -1));
+        btnCartelera.setText("Ver Cartelera");
+        btnCartelera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCarteleraActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnCartelera, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 240, -1, -1));
 
         btnComprar.setText("Comprar Boletos: ");
         getContentPane().add(btnComprar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 240, -1, -1));
@@ -164,8 +171,16 @@ private void btnVerComprasActionPerformed(java.awt.event.ActionEvent evt) {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 320, 110));
 
+        btnCalcular1.setText("Calcular Total");
+        getContentPane().add(btnCalcular1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, -1, -1));
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCarteleraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCarteleraActionPerformed
+        VistasCartelera cartelera = new VistasCartelera();
+        cartelera.setVisible(true);
+    }//GEN-LAST:event_btnCarteleraActionPerformed
 
     /**
      * @param args the command line arguments
@@ -203,7 +218,8 @@ private void btnVerComprasActionPerformed(java.awt.event.ActionEvent evt) {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCalcular;
+    private javax.swing.JButton btnCalcular1;
+    private javax.swing.JButton btnCartelera;
     private javax.swing.JButton btnComprar;
     private javax.swing.JButton btnVerCompras;
     private javax.swing.JComboBox<String> cmbFunciones;
