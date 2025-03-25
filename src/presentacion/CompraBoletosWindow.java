@@ -125,6 +125,7 @@ private void btnVerComprasActionPerformed(java.awt.event.ActionEvent evt) {
         btnCalcular1 = new javax.swing.JButton();
         btnCartelera1 = new javax.swing.JButton();
         cmbFunciones = new javax.swing.JComboBox<>();
+        bntRegresar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -182,6 +183,14 @@ private void btnVerComprasActionPerformed(java.awt.event.ActionEvent evt) {
         cmbFunciones.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel1.add(cmbFunciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, -1, -1));
 
+        bntRegresar.setText("Regresar");
+        bntRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bntRegresarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(bntRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 460, -1, -1));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 520, 510));
 
         pack();
@@ -191,6 +200,12 @@ private void btnVerComprasActionPerformed(java.awt.event.ActionEvent evt) {
         SeleccionAsientos asiento = new SeleccionAsientos();
         asiento.setVisible(true);
     }//GEN-LAST:event_btnAsientoActionPerformed
+
+    private void bntRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntRegresarActionPerformed
+               MainMenu menu = new MainMenu();
+               menu.setVisible(true);
+               this.dispose();
+    }//GEN-LAST:event_bntRegresarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -228,6 +243,7 @@ private void btnVerComprasActionPerformed(java.awt.event.ActionEvent evt) {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bntRegresar;
     private javax.swing.JButton btnAsiento;
     private javax.swing.JButton btnCalcular1;
     private javax.swing.JButton btnCartelera1;

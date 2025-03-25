@@ -95,7 +95,7 @@ public class ReportesVentas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuActionPerformed
-        MainMenu menu = new MainMenu();
+        MenuAdmin menu = new MenuAdmin();
         menu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnMenuActionPerformed

@@ -27,7 +27,6 @@ public class MainMenu extends javax.swing.JFrame {
     private void initComponents() {
 
         btnVentanaFuncion = new javax.swing.JButton();
-        btnVentanaClientes = new javax.swing.JButton();
         btnVentanaBoleto = new javax.swing.JButton();
         btnVentanaPeliculas = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
@@ -43,16 +42,7 @@ public class MainMenu extends javax.swing.JFrame {
                 btnVentanaFuncionActionPerformed(evt);
             }
         });
-        getContentPane().add(btnVentanaFuncion, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 130, -1));
-
-        btnVentanaClientes.setBackground(new java.awt.Color(255, 204, 0));
-        btnVentanaClientes.setText("Clientes");
-        btnVentanaClientes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVentanaClientesActionPerformed(evt);
-            }
-        });
-        getContentPane().add(btnVentanaClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 130, -1));
+        getContentPane().add(btnVentanaFuncion, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 130, -1));
 
         btnVentanaBoleto.setBackground(new java.awt.Color(204, 102, 0));
         btnVentanaBoleto.setText("Boletos");
@@ -61,19 +51,19 @@ public class MainMenu extends javax.swing.JFrame {
                 btnVentanaBoletoActionPerformed(evt);
             }
         });
-        getContentPane().add(btnVentanaBoleto, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 130, -1));
+        getContentPane().add(btnVentanaBoleto, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 130, -1));
 
-        btnVentanaPeliculas.setBackground(new java.awt.Color(0, 102, 153));
+        btnVentanaPeliculas.setBackground(new java.awt.Color(255, 204, 51));
         btnVentanaPeliculas.setText("Peliculas");
         btnVentanaPeliculas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnVentanaPeliculasActionPerformed(evt);
             }
         });
-        getContentPane().add(btnVentanaPeliculas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 130, -1));
+        getContentPane().add(btnVentanaPeliculas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 130, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/imagenes/MainMenu.jpg"))); // NOI18N
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-3, -4, 530, 350));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 530, 350));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -83,12 +73,6 @@ public class MainMenu extends javax.swing.JFrame {
         boletos.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVentanaBoletoActionPerformed
-
-    private void btnVentanaClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentanaClientesActionPerformed
-        ClientesWindow clientes = new ClientesWindow();
-        clientes.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnVentanaClientesActionPerformed
 
     private void btnVentanaPeliculasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentanaPeliculasActionPerformed
         VistasCartelera cartelera = new VistasCartelera();
@@ -138,50 +122,9 @@ public class MainMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnBoletos;
-    private javax.swing.JButton btnBoletos1;
-    private javax.swing.JButton btnBoletos2;
-    private javax.swing.JButton btnBoletos3;
-    private javax.swing.JButton btnBoletos4;
-    private javax.swing.JButton btnBoletos5;
-    private javax.swing.JButton btnBoletos6;
-    private javax.swing.JButton btnBoletos7;
-    private javax.swing.JButton btnClientes;
-    private javax.swing.JButton btnClientes1;
-    private javax.swing.JButton btnClientes2;
-    private javax.swing.JButton btnClientes3;
-    private javax.swing.JButton btnClientes4;
-    private javax.swing.JButton btnClientes5;
-    private javax.swing.JButton btnClientes6;
-    private javax.swing.JButton btnClientes7;
-    private javax.swing.JButton btnFunciones;
-    private javax.swing.JButton btnFunciones1;
-    private javax.swing.JButton btnFunciones2;
-    private javax.swing.JButton btnFunciones3;
-    private javax.swing.JButton btnFunciones4;
-    private javax.swing.JButton btnFunciones5;
-    private javax.swing.JButton btnFunciones6;
-    private javax.swing.JButton btnFunciones7;
-    private javax.swing.JButton btnPeliculas;
-    private javax.swing.JButton btnPeliculas1;
-    private javax.swing.JButton btnPeliculas2;
-    private javax.swing.JButton btnPeliculas3;
-    private javax.swing.JButton btnPeliculas4;
-    private javax.swing.JButton btnPeliculas5;
-    private javax.swing.JButton btnPeliculas6;
-    private javax.swing.JButton btnPeliculas7;
     private javax.swing.JButton btnVentanaBoleto;
-    private javax.swing.JButton btnVentanaClientes;
     private javax.swing.JButton btnVentanaFuncion;
     private javax.swing.JButton btnVentanaPeliculas;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
     // End of variables declaration//GEN-END:variables
 }

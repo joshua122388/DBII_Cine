@@ -40,7 +40,8 @@ public class Registro extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtUsuario = new javax.swing.JTextField();
         txtPassword = new javax.swing.JPasswordField();
-        btnRegistro = new javax.swing.JButton();
+        btnRegresar = new javax.swing.JButton();
+        btnRegistro1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -65,15 +66,25 @@ public class Registro extends javax.swing.JFrame {
         txtPassword.setBackground(new java.awt.Color(51, 153, 255));
         jPanel1.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 170, 170, -1));
 
-        btnRegistro.setBackground(new java.awt.Color(51, 255, 51));
-        btnRegistro.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        btnRegistro.setText("Registrarse");
-        btnRegistro.addActionListener(new java.awt.event.ActionListener() {
+        btnRegresar.setBackground(new java.awt.Color(255, 255, 0));
+        btnRegresar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnRegresar.setText("Regresar");
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegistroActionPerformed(evt);
+                btnRegresarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 250, 140, 40));
+        jPanel1.add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 290, 140, 40));
+
+        btnRegistro1.setBackground(new java.awt.Color(51, 255, 51));
+        btnRegistro1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnRegistro1.setText("Registrarse");
+        btnRegistro1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistro1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnRegistro1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 250, 140, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -90,12 +101,20 @@ public class Registro extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     
-    private void btnRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistroActionPerformed
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        LoginWindow login = new LoginWindow();
+        login.setVisible(true);
+        this.dispose(); 
+    }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void btnRegistro1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistro1ActionPerformed
     String usuario = txtUsuario.getText();
     String contrasena = new String(txtPassword.getPassword());
 
     if (usuario.isEmpty() || contrasena.isEmpty()) {
         JOptionPane.showMessageDialog(this, "Por favor complete todos los campos.");
+        txtUsuario.setText("");
+        txtPassword.setText("");
         return;
     }
 
@@ -128,7 +147,7 @@ public class Registro extends javax.swing.JFrame {
         txtUsuario.setText("");
         txtPassword.setText("");
     }
-    }//GEN-LAST:event_btnRegistroActionPerformed
+    }//GEN-LAST:event_btnRegistro1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -166,7 +185,8 @@ public class Registro extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnRegistro;
+    private javax.swing.JButton btnRegistro1;
+    private javax.swing.JButton btnRegresar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

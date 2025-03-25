@@ -101,7 +101,7 @@ public class ReporteClienteTiquete extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExportarActionPerformed
 
     private void btnMenuP1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuP1ActionPerformed
-       MainMenu menu = new MainMenu();
+       MenuAdmin menu = new MenuAdmin();
        menu.setVisible(true);
        this.dispose();
     }//GEN-LAST:event_btnMenuP1ActionPerformed

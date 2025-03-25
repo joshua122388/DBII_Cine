@@ -148,6 +148,8 @@ private void cargarFunciones() {
         lblPeliculas = new javax.swing.JLabel();
         lblSala = new javax.swing.JLabel();
         brnFiltro = new javax.swing.JButton();
+        btnRegresar = new javax.swing.JButton();
+        jDateChooser1 = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -183,10 +185,25 @@ private void cargarFunciones() {
         brnFiltro.setText("Aplicar");
         jPanel1.add(brnFiltro, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 330, -1, -1));
 
+        btnRegresar.setText("Regresar");
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 330, -1, -1));
+        jPanel1.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 260, 130, -1));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 830, 460));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+       MainMenu menu = new MainMenu();
+       menu.setVisible(true);
+       this.dispose();
+    }//GEN-LAST:event_btnRegresarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -225,7 +242,9 @@ private void cargarFunciones() {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton brnFiltro;
+    private javax.swing.JButton btnRegresar;
     private javax.swing.JComboBox<String> cmbPelicula;
+    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblFunciones;

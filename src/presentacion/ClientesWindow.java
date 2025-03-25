@@ -159,6 +159,8 @@ private void eliminarCliente() {
         btnActualizar = new javax.swing.JButton();
         lblTelefono1 = new javax.swing.JLabel();
         txtTelefonoCliente = new javax.swing.JTextField();
+        btnActualizar1 = new javax.swing.JButton();
+        brnRegresar = new javax.swing.JButton();
 
         tblClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -249,6 +251,22 @@ private void eliminarCliente() {
         jPanel1.add(lblTelefono1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, -1, -1));
         jPanel1.add(txtTelefonoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, 170, -1));
 
+        btnActualizar1.setText("Actualizar");
+        btnActualizar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizar1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnActualizar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 320, 110, 40));
+
+        brnRegresar.setText("Regresar");
+        brnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                brnRegresarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(brnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 380, 110, 40));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -317,6 +335,16 @@ private void eliminarCliente() {
         }      
     }//GEN-LAST:event_tblClentesMouseClicked
 
+    private void btnActualizar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizar1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnActualizar1ActionPerformed
+
+    private void brnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brnRegresarActionPerformed
+       MenuAdmin menu = new MenuAdmin();
+       menu.setVisible(true);
+       this.dispose();
+    }//GEN-LAST:event_brnRegresarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -354,7 +382,9 @@ private void eliminarCliente() {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton brnRegresar;
     private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnActualizar1;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

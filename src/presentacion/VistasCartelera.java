@@ -130,7 +130,7 @@ public class VistasCartelera extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(DefaultTableModel);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 880, 160));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 880, 120));
 
         jButton3.setText("Menu Principal");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -146,7 +146,7 @@ public class VistasCartelera extends javax.swing.JFrame {
                 ElejirPeliculaMouseClicked(evt);
             }
         });
-        jPanel1.add(ElejirPelicula, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 180, 130, -1));
+        jPanel1.add(ElejirPelicula, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 180, 230, -1));
 
         btnFiltroPelicula1.setText("Aplicar Filtro");
         btnFiltroPelicula1.addActionListener(new java.awt.event.ActionListener() {
