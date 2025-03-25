@@ -35,6 +35,7 @@ public class LoginWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel2 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         lblCineBienvenida = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -47,106 +48,55 @@ public class LoginWindow extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel1.setBackground(new java.awt.Color(47, 140, 189));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        lblCineBienvenida.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblCineBienvenida.setText("Bienvenido al Sistema de Gestión de Cine");
-        jPanel1.add(lblCineBienvenida, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, -1, -1));
+        jPanel1.add(lblCineBienvenida, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, -1, -1));
 
         jLabel1.setText("Usuario:");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 50, -1, -1));
+
+        txtUsuario.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 70, 110, 30));
 
         lblPassword.setText("Constraseña:");
         jPanel1.add(lblPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 130, -1, -1));
+
+        txtPassword.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 160, 110, 30));
 
+        btnRegistro.setBackground(new java.awt.Color(255, 102, 0));
         btnRegistro.setText("Registrarse");
-        btnRegistro.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegistroActionPerformed(evt);
-            }
-        });
         jPanel1.add(btnRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 220, 140, 40));
 
         lblMensaje.setText("Mensaje:");
-        jPanel1.add(lblMensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 290, 300, 20));
+        jPanel1.add(lblMensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 310, 300, 20));
 
+        btnLogin1.setBackground(new java.awt.Color(102, 255, 102));
         btnLogin1.setText("Login");
-        btnLogin1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLogin1ActionPerformed(evt);
-            }
-        });
         jPanel1.add(btnLogin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 220, 140, 40));
+
+        jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 520, 390));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 511, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 367, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
-    private void btnRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistroActionPerformed
         
-        Registro reg = new Registro();
-        reg.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnRegistroActionPerformed
-
-    private void btnLogin1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogin1ActionPerformed
-            String usuario = txtUsuario.getText();
-            String password = new String(txtPassword.getPassword());
-
-    // Encriptamos el password ingresado
-    Encriptador encriptador = new LogicaNegocio.EncriptadorSHA256();
-    String passwordEncriptado = encriptador.encriptarSHA256(password);
-
-    try {
-        Connection conn = ConexionSQL.conectar();
-        if (conn == null) {
-            lblMensaje.setText("Error: No se pudo conectar a la base de datos");
-            return;
-        }
-
-        String query = "SELECT * FROM INGRESO WHERE usuario = ? AND contrasena = ?";
-        PreparedStatement stmt = conn.prepareStatement(query);
-        stmt.setString(1, usuario);
-        stmt.setString(2, passwordEncriptado);
-        ResultSet rs = stmt.executeQuery();
-
-        if (rs.next()) {
-            lblMensaje.setText("Inicio de sesión exitoso");
-            JOptionPane.showMessageDialog(this, "Bienvenido: " + usuario);
-            this.dispose();
-            new MainMenu().setVisible(true);
-        } else {
-            lblMensaje.setForeground(Color.RED);
-            lblMensaje.setText("Llene todos los campos");
-
-            
-        }
-
-        rs.close();
-        stmt.close();
-        conn.close();
-    } catch (SQLException ex) {
-        ex.printStackTrace();
-        lblMensaje.setText("Error en la conexión: " + ex.getMessage());
-    }
-    }//GEN-LAST:event_btnLogin1ActionPerformed
-    
     
     
     
@@ -191,6 +141,7 @@ public class LoginWindow extends javax.swing.JFrame {
     private javax.swing.JButton btnRegistro;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblCineBienvenida;
     private javax.swing.JLabel lblMensaje;
     private javax.swing.JLabel lblPassword;

@@ -26,35 +26,51 @@ public class MainMenu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btnVentanaFuncion = new javax.swing.JButton();
+        btnVentanaClientes = new javax.swing.JButton();
+        btnVentanaBoleto = new javax.swing.JButton();
+        btnVentanaPeliculas = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Menu Principal");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jButton2.setBackground(new java.awt.Color(0, 204, 102));
-        jButton2.setText("Funciones");
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 130, -1));
-
-        jButton3.setBackground(new java.awt.Color(255, 204, 0));
-        jButton3.setText("Clientes");
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 130, -1));
-
-        jButton4.setBackground(new java.awt.Color(204, 102, 0));
-        jButton4.setText("Boletos");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        btnVentanaFuncion.setBackground(new java.awt.Color(0, 204, 102));
+        btnVentanaFuncion.setText("Funciones");
+        btnVentanaFuncion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                btnVentanaFuncionActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 130, -1));
+        getContentPane().add(btnVentanaFuncion, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 130, -1));
 
-        jButton5.setBackground(new java.awt.Color(0, 102, 153));
-        jButton5.setText("Peliculas");
-        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 130, -1));
+        btnVentanaClientes.setBackground(new java.awt.Color(255, 204, 0));
+        btnVentanaClientes.setText("Clientes");
+        btnVentanaClientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVentanaClientesActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnVentanaClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 130, -1));
+
+        btnVentanaBoleto.setBackground(new java.awt.Color(204, 102, 0));
+        btnVentanaBoleto.setText("Boletos");
+        btnVentanaBoleto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVentanaBoletoActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnVentanaBoleto, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 130, -1));
+
+        btnVentanaPeliculas.setBackground(new java.awt.Color(0, 102, 153));
+        btnVentanaPeliculas.setText("Peliculas");
+        btnVentanaPeliculas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVentanaPeliculasActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnVentanaPeliculas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 130, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/imagenes/MainMenu.jpg"))); // NOI18N
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-3, -4, 530, 350));
@@ -62,9 +78,29 @@ public class MainMenu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    private void btnVentanaBoletoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentanaBoletoActionPerformed
+        CompraBoletosWindow boletos = new CompraBoletosWindow();
+        boletos.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnVentanaBoletoActionPerformed
+
+    private void btnVentanaClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentanaClientesActionPerformed
+        ClientesWindow clientes = new ClientesWindow();
+        clientes.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnVentanaClientesActionPerformed
+
+    private void btnVentanaPeliculasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentanaPeliculasActionPerformed
+        VistasCartelera cartelera = new VistasCartelera();
+        cartelera.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnVentanaPeliculasActionPerformed
+
+    private void btnVentanaFuncionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentanaFuncionActionPerformed
+        FuncionesWindow funcion = new FuncionesWindow();
+        funcion.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnVentanaFuncionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -134,10 +170,10 @@ public class MainMenu extends javax.swing.JFrame {
     private javax.swing.JButton btnPeliculas5;
     private javax.swing.JButton btnPeliculas6;
     private javax.swing.JButton btnPeliculas7;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton btnVentanaBoleto;
+    private javax.swing.JButton btnVentanaClientes;
+    private javax.swing.JButton btnVentanaFuncion;
+    private javax.swing.JButton btnVentanaPeliculas;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
