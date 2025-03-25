@@ -4,6 +4,8 @@ import java.sql.*;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import accesoDatos.ConexionSQL;
+import java.awt.Color;
+import javax.swing.JTextField;
 /**
  *
  * @author contr
@@ -15,86 +17,120 @@ public class ClientesWindow extends javax.swing.JFrame {
      */
     public ClientesWindow() {
         initComponents();
+        
          cargarClientes();
+         
+         tblClentes.getSelectionModel().addListSelectionListener(e -> {
+    if (!e.getValueIsAdjusting()) {
+        int filaSeleccionada = tblClentes.getSelectedRow();
+        if (filaSeleccionada != -1) {
+            txtIDCliente.setText(tblClentes.getValueAt(filaSeleccionada, 0).toString());
+            txtNombreCliente.setText(tblClentes.getValueAt(filaSeleccionada, 1).toString());
+            txtCorreoCliente.setText(tblClentes.getValueAt(filaSeleccionada, 2).toString());
+            txtIDMembresia.setText(tblClentes.getValueAt(filaSeleccionada, 3).toString());
+
+            txtIDCliente.setEditable(false); // Desactiva edición
+            txtIDCliente.setHorizontalAlignment(JTextField.CENTER); // Centra el texto
+            txtIDCliente.setBackground(Color.LIGHT_GRAY); // Cambia el fondo para que se note que está desactivado
+        }
+    }
+});
+
+         
     }
     
-         private void cargarClientes() {
-        try {
-            Connection conn = ConexionSQL.conectar();
-            String query = "SELECT * FROM Cliente";
-            PreparedStatement stmt = conn.prepareStatement(query);
-            ResultSet rs = stmt.executeQuery();
+private void cargarClientes() {
+    try {
+        Connection conn = ConexionSQL.conectar();
+        String query = "SELECT cli.ID_Cliente, cli.Nombre, cli.Correo, cli.Telefono, m.Tipo " +
+               "FROM cliente cli JOIN membresia m ON cli.ID_Membresia = m.ID_Membresia";
 
-            DefaultTableModel model = (DefaultTableModel) tblClientes.getModel();
-            model.setRowCount(0); // Limpiar tabla
+        PreparedStatement stmt = conn.prepareStatement(query);
+        ResultSet rs = stmt.executeQuery();
 
-            while (rs.next()) {
-                model.addRow(new Object[]{rs.getInt("ID_Cliente"), rs.getString("Nombre"), rs.getString("Correo"), rs.getString("Telefono")});
-            }
+        // Crear modelo con nombres personalizados de columnas
+DefaultTableModel model = new DefaultTableModel(
+    new Object[] { "ID_Cliente", "Nombre", "Correo", "Teléfono", "Membresia" }, 0
+            );
 
-            rs.close();
-            stmt.close();
-            conn.close();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Error al cargar clientes: " + ex.getMessage());
+        while (rs.next()) {
+            model.addRow(new Object[]{
+                rs.getInt("ID_Cliente"),
+                rs.getString("Nombre"),
+                rs.getString("Correo"),
+                rs.getString("Telefono"),
+                rs.getString("Tipo")
+            });
         }
+
+        tblClentes.setModel(model); // Asignar modelo a la tabla
+
+        rs.close();
+        stmt.close();
+        conn.close();
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Error al cargar clientes: " + ex.getMessage());
     }
+}
+
          
-        private void agregarCliente() {
-        try {
-            Connection conn = ConexionSQL.conectar();
-            String query = "INSERT INTO Clientes (nombre, correo, telefono) VALUES (?, ?, ?)";
-            PreparedStatement stmt = conn.prepareStatement(query);
-            stmt.setString(1, txtNombre.getText());
-            stmt.setString(2, txtCorreo.getText());
-            stmt.setString(3, txtTelefono.getText());
-            stmt.executeUpdate();
+private void agregarCliente() {
+    try {
+        Connection conn = ConexionSQL.conectar();
+        String query = "INSERT INTO Cliente (Nombre, Correo, Telefono) VALUES (?, ?, ?)";
+        PreparedStatement stmt = conn.prepareStatement(query);
+        stmt.setString(1, txtNombreCliente.getText());
+        stmt.setString(2, txtCorreoCliente.getText());
+        stmt.setString(3, txtIDMembresia.getText());
+        stmt.executeUpdate();
 
-            JOptionPane.showMessageDialog(this, "Cliente agregado correctamente.");
-            stmt.close();
-            conn.close();
-            cargarClientes(); // Recargar datos
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Error al agregar cliente: " + ex.getMessage());
-        }
+        JOptionPane.showMessageDialog(this, "Cliente agregado correctamente.");
+        stmt.close();
+        conn.close();
+        cargarClientes(); // Recargar datos
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Error al agregar cliente: " + ex.getMessage());
     }
+}
               
-        private void actualizarCliente() {
-        try {
-            Connection conn = ConexionSQL.conectar();
-            String query = "UPDATE Clientes SET nombre=?, correo=?, telefono=? WHERE id=?";
-            PreparedStatement stmt = conn.prepareStatement(query);
-            stmt.setString(1, txtNombre.getText());
-            stmt.setString(2, txtCorreo.getText());
-            stmt.setString(3, txtTelefono.getText());
-            stmt.setInt(4, Integer.parseInt(txtIDCliente.getText()));
-            stmt.executeUpdate();
+private void actualizarCliente() {
+    try {
+        Connection conn = ConexionSQL.conectar();
+        String query = "UPDATE Cliente SET Nombre = ?, Correo = ?, Telefono = ? WHERE ID_Cliente = ?";
+        PreparedStatement stmt = conn.prepareStatement(query);
+        stmt.setString(1, txtNombreCliente.getText());
+        stmt.setString(2, txtCorreoCliente.getText());
+        stmt.setString(3, txtIDMembresia.getText());
+        stmt.setInt(4, Integer.parseInt(txtIDCliente.getText()));
+        stmt.executeUpdate();
 
-            JOptionPane.showMessageDialog(this, "Cliente actualizado correctamente.");
-            stmt.close();
-            conn.close();
-            cargarClientes();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Error al actualizar cliente: " + ex.getMessage());
-        }
+        JOptionPane.showMessageDialog(this, "Cliente actualizado correctamente.");
+        stmt.close();
+        conn.close();
+        cargarClientes(); // Recargar datos
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Error al actualizar cliente: " + ex.getMessage());
     }
+}
+
         
-      private void eliminarCliente() {
-        try {
-            Connection conn = ConexionSQL.conectar();
-            String query = "DELETE FROM Clientes WHERE id=?";
-            PreparedStatement stmt = conn.prepareStatement(query);
-            stmt.setInt(1, Integer.parseInt(txtIDCliente.getText()));
-            stmt.executeUpdate();
+private void eliminarCliente() {
+    try {
+        Connection conn = ConexionSQL.conectar();
+        String query = "DELETE FROM Cliente WHERE ID_Cliente = ?";
+        PreparedStatement stmt = conn.prepareStatement(query);
+        stmt.setInt(1, Integer.parseInt(txtIDCliente.getText()));
+        stmt.executeUpdate();
 
-            JOptionPane.showMessageDialog(this, "Cliente eliminado correctamente.");
-            stmt.close();
-            conn.close();
-            cargarClientes();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Error al eliminar cliente: " + ex.getMessage());
-        }
+        JOptionPane.showMessageDialog(this, "Cliente eliminado correctamente.");
+        stmt.close();
+        conn.close();
+        cargarClientes(); // Recargar datos
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Error al eliminar cliente: " + ex.getMessage());
     }
+}
+
       
       
 
@@ -113,16 +149,16 @@ public class ClientesWindow extends javax.swing.JFrame {
         lblNombre = new javax.swing.JLabel();
         lblCorreo = new javax.swing.JLabel();
         lblTelefono = new javax.swing.JLabel();
-        txtNombre = new javax.swing.JTextField();
-        txtCorreo = new javax.swing.JTextField();
-        btnAgregar = new javax.swing.JButton();
-        btnActualizar = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
-        btnCargar = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         txtIDCliente = new javax.swing.JTextField();
-        txtTelefono = new javax.swing.JTextField();
+        txtIDMembresia = new javax.swing.JTextField();
+        btnEliminar = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblClentes = new javax.swing.JTable();
+        txtNombreCliente = new javax.swing.JTextField();
+        txtCorreoCliente = new javax.swing.JTextField();
+        btnActualizar = new javax.swing.JButton();
+        lblTelefono1 = new javax.swing.JLabel();
+        txtTelefonoCliente = new javax.swing.JTextField();
 
         tblClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -141,44 +177,29 @@ public class ClientesWindow extends javax.swing.JFrame {
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         jLabel1.setText("Clientes del Cine");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 30, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 10, -1, -1));
 
         lblId.setText("ID: ");
-        jPanel1.add(lblId, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, -1, -1));
+        jPanel1.add(lblId, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, -1));
 
         lblNombre.setText("Nombre del Cliente:");
-        jPanel1.add(lblNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 300, -1, -1));
+        jPanel1.add(lblNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, -1, 20));
 
         lblCorreo.setText("Correo: ");
-        jPanel1.add(lblCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 300, -1, 20));
+        jPanel1.add(lblCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, 20));
 
-        lblTelefono.setText("Telefono:");
-        jPanel1.add(lblTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 300, -1, -1));
+        lblTelefono.setText("Membresia:");
+        jPanel1.add(lblTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, -1, -1));
 
-        txtNombre.addActionListener(new java.awt.event.ActionListener() {
+        txtIDCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNombreActionPerformed(evt);
+                txtIDClienteActionPerformed(evt);
             }
         });
-        jPanel1.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 330, 110, -1));
-        jPanel1.add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 330, 100, -1));
-
-        btnAgregar.setText("Agregar");
-        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, -1, -1));
-
-        btnActualizar.setText("Actualizar");
-        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnActualizarActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 360, 90, -1));
+        jPanel1.add(txtIDCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 130, -1));
+        jPanel1.add(txtIDMembresia, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 300, 170, -1));
 
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -186,17 +207,9 @@ public class ClientesWindow extends javax.swing.JFrame {
                 btnEliminarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 360, 100, -1));
+        jPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 320, 120, 40));
 
-        btnCargar.setText("Cargar");
-        btnCargar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCargarActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnCargar, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 360, -1, -1));
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblClentes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -207,45 +220,102 @@ public class ClientesWindow extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        tblClentes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblClentesMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(tblClentes);
 
-        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 470, 210));
-        jPanel1.add(txtIDCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, -1, -1));
-        jPanel1.add(txtTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 330, -1, -1));
+        jPanel1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 80, 470, 210));
+
+        txtNombreCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombreClienteActionPerformed(evt);
+            }
+        });
+        jPanel1.add(txtNombreCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 160, 110, -1));
+        jPanel1.add(txtCorreoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 200, 180, -1));
+
+        btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 320, 110, 40));
+
+        lblTelefono1.setText("Telefono:");
+        jPanel1.add(lblTelefono1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, -1, -1));
+        jPanel1.add(txtTelefonoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, 170, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 553, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 856, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 12, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 463, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 9, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
+    private void txtIDClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIDClienteActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNombreActionPerformed
-
-    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        agregarCliente();        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAgregarActionPerformed
-
-    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-        actualizarCliente();        // TODO add your handling code here:
-    }//GEN-LAST:event_btnActualizarActionPerformed
+    }//GEN-LAST:event_txtIDClienteActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        eliminarCliente();        // TODO add your handling code here:
+        eliminarCliente();
+        cargarClientes();// TODO add your handling code here:
     }//GEN-LAST:event_btnEliminarActionPerformed
 
-    private void btnCargarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCargarActionPerformed
-        cargarClientes();        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCargarActionPerformed
+    private void txtNombreClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreClienteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreClienteActionPerformed
+
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+    int filaSeleccionada = tblClentes.getSelectedRow();
+    if (filaSeleccionada == -1) {
+        JOptionPane.showMessageDialog(this, "Seleccione la fila deseada");
+        return;
+    }
+        
+                txtIDMembresia.setEditable(false);
+                txtIDMembresia.setHorizontalAlignment(JTextField.CENTER);
+                txtIDMembresia.setBackground(new Color(220, 220, 220)); // Gris claro
+    
+    actualizarCliente(); // Llama al método ya existente
+    }//GEN-LAST:event_btnActualizarActionPerformed
+    
+    
+    private void tblClentesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClentesMouseClicked
+        
+            int fila = tblClentes.getSelectedRow();
+    
+    if (fila != -1) {
+        txtIDCliente.setText(tblClentes.getValueAt(fila, 0).toString());
+        txtNombreCliente.setText(tblClentes.getValueAt(fila, 1).toString());
+        txtCorreoCliente.setText(tblClentes.getValueAt(fila, 2).toString());
+        txtTelefonoCliente.setText(tblClentes.getValueAt(fila, 3).toString());
+        txtIDMembresia.setText(tblClentes.getValueAt(fila, 4).toString());
+
+        // Bloquear y centrar los campos ID
+        txtIDCliente.setEditable(false);
+        txtIDCliente.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtIDCliente.setBackground(new java.awt.Color(220, 220, 220)); // gris claro
+
+        txtIDMembresia.setEditable(false);
+        txtIDMembresia.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtIDMembresia.setBackground(new java.awt.Color(220, 220, 220)); // gris claro
+        }      
+    }//GEN-LAST:event_tblClentesMouseClicked
 
     /**
      * @param args the command line arguments
@@ -285,22 +355,22 @@ public class ClientesWindow extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnActualizar;
-    private javax.swing.JButton btnAgregar;
-    private javax.swing.JButton btnCargar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblCorreo;
     private javax.swing.JLabel lblId;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblTelefono;
+    private javax.swing.JLabel lblTelefono1;
+    private javax.swing.JTable tblClentes;
     private javax.swing.JTable tblClientes;
-    private javax.swing.JTextField txtCorreo;
+    private javax.swing.JTextField txtCorreoCliente;
     private javax.swing.JTextField txtIDCliente;
-    private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtTelefono;
+    private javax.swing.JTextField txtIDMembresia;
+    private javax.swing.JTextField txtNombreCliente;
+    private javax.swing.JTextField txtTelefonoCliente;
     // End of variables declaration//GEN-END:variables
 }

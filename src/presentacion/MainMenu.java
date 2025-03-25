@@ -26,101 +26,81 @@ public class MainMenu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        btnClientes = new javax.swing.JButton();
-        btnPeliculas = new javax.swing.JButton();
-        btnFunciones = new javax.swing.JButton();
-        btnBoletos = new javax.swing.JButton();
+        btnVentanaFuncion = new javax.swing.JButton();
+        btnVentanaClientes = new javax.swing.JButton();
+        btnVentanaBoleto = new javax.swing.JButton();
+        btnVentanaPeliculas = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Menu Principal");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setText("Sistema de Gestión de Cine");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(121, 17, -1, -1));
-
-        btnClientes.setText("Clientes");
-        btnClientes.addActionListener(new java.awt.event.ActionListener() {
+        btnVentanaFuncion.setBackground(new java.awt.Color(0, 204, 102));
+        btnVentanaFuncion.setText("Funciones");
+        btnVentanaFuncion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnClientesActionPerformed(evt);
+                btnVentanaFuncionActionPerformed(evt);
             }
         });
+        getContentPane().add(btnVentanaFuncion, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 130, -1));
 
-        btnPeliculas.setText("Películas");
-        btnPeliculas.addActionListener(new java.awt.event.ActionListener() {
+        btnVentanaClientes.setBackground(new java.awt.Color(255, 204, 0));
+        btnVentanaClientes.setText("Clientes");
+        btnVentanaClientes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPeliculasActionPerformed(evt);
+                btnVentanaClientesActionPerformed(evt);
             }
         });
+        getContentPane().add(btnVentanaClientes, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 130, -1));
 
-        btnFunciones.setText("Funciones");
-        btnFunciones.addActionListener(new java.awt.event.ActionListener() {
+        btnVentanaBoleto.setBackground(new java.awt.Color(204, 102, 0));
+        btnVentanaBoleto.setText("Boletos");
+        btnVentanaBoleto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFuncionesActionPerformed(evt);
+                btnVentanaBoletoActionPerformed(evt);
             }
         });
+        getContentPane().add(btnVentanaBoleto, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 130, -1));
 
-        btnBoletos.setText("Compra Boletos");
-        btnBoletos.addActionListener(new java.awt.event.ActionListener() {
+        btnVentanaPeliculas.setBackground(new java.awt.Color(0, 102, 153));
+        btnVentanaPeliculas.setText("Peliculas");
+        btnVentanaPeliculas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBoletosActionPerformed(evt);
+                btnVentanaPeliculasActionPerformed(evt);
             }
         });
+        getContentPane().add(btnVentanaPeliculas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 130, -1));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnClientes)
-                .addGap(18, 18, 18)
-                .addComponent(btnPeliculas)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnFunciones)
-                .addGap(18, 18, 18)
-                .addComponent(btnBoletos)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnClientes)
-                    .addComponent(btnPeliculas)
-                    .addComponent(btnFunciones)
-                    .addComponent(btnBoletos))
-                .addContainerGap(62, Short.MAX_VALUE))
-        );
-
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 50, -1, -1));
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/imagenes/MainMenu.jpg"))); // NOI18N
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-3, -4, 530, 350));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnPeliculasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPeliculasActionPerformed
-       VistasCartelera peliculas = new VistasCartelera();
-       peliculas.setVisible(true);
-    }//GEN-LAST:event_btnPeliculasActionPerformed
+    private void btnVentanaBoletoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentanaBoletoActionPerformed
+        CompraBoletosWindow boletos = new CompraBoletosWindow();
+        boletos.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnVentanaBoletoActionPerformed
 
-    private void btnFuncionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFuncionesActionPerformed
-       FuncionesWindow funcion = new FuncionesWindow();
-       funcion.setVisible(true);
-       this.dispose();
-    }//GEN-LAST:event_btnFuncionesActionPerformed
-
-    private void btnBoletosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBoletosActionPerformed
-         CompraBoletosWindow boletos = new CompraBoletosWindow();
-         boletos.setVisible(true);
-         this.dispose();
-    }//GEN-LAST:event_btnBoletosActionPerformed
-
-    private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
+    private void btnVentanaClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentanaClientesActionPerformed
         ClientesWindow clientes = new ClientesWindow();
         clientes.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_btnClientesActionPerformed
+    }//GEN-LAST:event_btnVentanaClientesActionPerformed
+
+    private void btnVentanaPeliculasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentanaPeliculasActionPerformed
+        VistasCartelera cartelera = new VistasCartelera();
+        cartelera.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnVentanaPeliculasActionPerformed
+
+    private void btnVentanaFuncionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentanaFuncionActionPerformed
+        FuncionesWindow funcion = new FuncionesWindow();
+        funcion.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnVentanaFuncionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -159,10 +139,49 @@ public class MainMenu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBoletos;
+    private javax.swing.JButton btnBoletos1;
+    private javax.swing.JButton btnBoletos2;
+    private javax.swing.JButton btnBoletos3;
+    private javax.swing.JButton btnBoletos4;
+    private javax.swing.JButton btnBoletos5;
+    private javax.swing.JButton btnBoletos6;
+    private javax.swing.JButton btnBoletos7;
     private javax.swing.JButton btnClientes;
+    private javax.swing.JButton btnClientes1;
+    private javax.swing.JButton btnClientes2;
+    private javax.swing.JButton btnClientes3;
+    private javax.swing.JButton btnClientes4;
+    private javax.swing.JButton btnClientes5;
+    private javax.swing.JButton btnClientes6;
+    private javax.swing.JButton btnClientes7;
     private javax.swing.JButton btnFunciones;
+    private javax.swing.JButton btnFunciones1;
+    private javax.swing.JButton btnFunciones2;
+    private javax.swing.JButton btnFunciones3;
+    private javax.swing.JButton btnFunciones4;
+    private javax.swing.JButton btnFunciones5;
+    private javax.swing.JButton btnFunciones6;
+    private javax.swing.JButton btnFunciones7;
     private javax.swing.JButton btnPeliculas;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton btnPeliculas1;
+    private javax.swing.JButton btnPeliculas2;
+    private javax.swing.JButton btnPeliculas3;
+    private javax.swing.JButton btnPeliculas4;
+    private javax.swing.JButton btnPeliculas5;
+    private javax.swing.JButton btnPeliculas6;
+    private javax.swing.JButton btnPeliculas7;
+    private javax.swing.JButton btnVentanaBoleto;
+    private javax.swing.JButton btnVentanaClientes;
+    private javax.swing.JButton btnVentanaFuncion;
+    private javax.swing.JButton btnVentanaPeliculas;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     // End of variables declaration//GEN-END:variables
 }

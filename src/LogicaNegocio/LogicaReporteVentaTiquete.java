@@ -1,13 +1,29 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package LogicaNegocio;
+package logicaNegocio;
 
-/**
- *
- * @author yoshy
- */
+import accesoDatos.ReporteVentaTiqueteDAO;
+import entidades.ReporteVentaTiquete;
+import java.util.List;
+
 public class LogicaReporteVentaTiquete {
-    
+    private ReporteVentaTiqueteDAO dao = new ReporteVentaTiqueteDAO();
+
+    public void insertar(ReporteVentaTiquete obj) throws Exception {
+        dao.insertar(obj);
+    }
+
+    public List<ReporteVentaTiquete> listarTodos() throws Exception {
+        return dao.listarTodos();
+    }
+
+    public void eliminar(int id) throws Exception {
+        dao.eliminar(id);
+    }
+
+    public ReporteVentaTiquete buscarPorID(int id) throws Exception {
+        return dao.buscarPorID(id);
+    }
+
+    public void actualizar(ReporteVentaTiquete obj) throws Exception {
+        dao.actualizar(obj);
+    }
 }

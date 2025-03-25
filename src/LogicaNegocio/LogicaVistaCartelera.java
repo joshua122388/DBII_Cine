@@ -1,13 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package LogicaNegocio;
+package logicaNegocio;
 
-/**
- *
- * @author yoshy
- */
+import accesoDatos.VistaCarteleraDAO;
+import entidades.VistaCartelera;
+import java.util.List;
+
 public class LogicaVistaCartelera {
-    
+    private VistaCarteleraDAO dao = new VistaCarteleraDAO();
+
+    public List<VistaCartelera> obtenerCartelera() throws Exception {
+        return dao.obtenerCartelera();
+    }
+
+    public List<String> obtenerTitulosPeliculas() throws Exception {
+        return dao.obtenerTitulosPeliculas();
+    }
 }

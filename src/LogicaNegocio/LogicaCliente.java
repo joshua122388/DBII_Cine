@@ -1,22 +1,30 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package LogicaNegocio;
-import Servicios.Cliente_Servicios;
+package logicaNegocio;
+
+import accesoDatos.ClienteDAO;
 import entidades.Cliente;
+import java.util.List;
 
-/**
- *
- * @author contr
- */
-public class LogicaCliente implements Cliente_Servicios{
+public class LogicaCliente {
+    
+    private ClienteDAO dao = new ClienteDAO();
 
-    @Override
-    public void registrarCliente(Cliente cliente) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public void insertar(Cliente cliente) throws Exception {
+        dao.insertar(cliente);
     }
-    
-    
-    
+
+    public void actualizar(Cliente cliente) throws Exception {
+        dao.actualizar(cliente);
+    }
+
+    public void eliminar(int id) throws Exception {
+        dao.eliminar(id);
+    }
+
+    public Cliente buscarPorID(int id) throws Exception {
+        return dao.buscarPorID(id);
+    }
+
+    public List<Cliente> listarTodos() throws Exception {
+        return dao.listarTodos();
+    }
 }
