@@ -13,6 +13,9 @@ import accesoDatos.ConexionSQL;
 import presentacion.MainMenu;
 import Seguridad.Encriptador;
 import java.awt.Color;
+import entidades.*;
+import Servicios.*;
+import logicaNegocio.*;
 /**
  *
  * @author contr
@@ -43,8 +46,7 @@ public class LoginWindow extends javax.swing.JFrame {
         lblPassword = new javax.swing.JLabel();
         txtPassword = new javax.swing.JPasswordField();
         btnRegistro = new javax.swing.JButton();
-        lblMensaje = new javax.swing.JLabel();
-        btnLogin1 = new javax.swing.JButton();
+        btnLogin = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,28 +59,39 @@ public class LoginWindow extends javax.swing.JFrame {
         lblCineBienvenida.setText("Bienvenido al Sistema de Gestión de Cine");
         jPanel1.add(lblCineBienvenida, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 10, -1, -1));
 
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("Usuario:");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 50, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 40, -1, -1));
 
         txtUsuario.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 70, 110, 30));
 
+        lblPassword.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblPassword.setText("Constraseña:");
-        jPanel1.add(lblPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 130, -1, -1));
+        jPanel1.add(lblPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 130, -1, -1));
 
         txtPassword.setBackground(new java.awt.Color(204, 204, 204));
         jPanel1.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 160, 110, 30));
 
         btnRegistro.setBackground(new java.awt.Color(255, 102, 0));
+        btnRegistro.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnRegistro.setText("Registrarse");
+        btnRegistro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegistroActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 220, 140, 40));
 
-        lblMensaje.setText("Mensaje:");
-        jPanel1.add(lblMensaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 310, 300, 20));
-
-        btnLogin1.setBackground(new java.awt.Color(102, 255, 102));
-        btnLogin1.setText("Login");
-        jPanel1.add(btnLogin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 220, 140, 40));
+        btnLogin.setBackground(new java.awt.Color(102, 255, 102));
+        btnLogin.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnLogin.setText("Login");
+        btnLogin.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoginActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 220, 140, 40));
 
         jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 520, 390));
 
@@ -95,6 +108,48 @@ public class LoginWindow extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
+            String usuario = txtUsuario.getText();
+            String password = new String(txtPassword.getPassword());
+
+    if (usuario.isEmpty() || password.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Llene todos los campos");
+        txtUsuario.setText("");
+        txtPassword.setText("");
+        return;
+    }
+
+    try {
+        // Crear objeto Login y lógica de negocio
+        Login login = new Login(usuario, password);
+        Login_Servicio servicio = new LogicaNegocio.LogicaLogin();
+
+        // Llamar al método login
+        boolean accesoPermitido = servicio.login(login);
+
+        if (accesoPermitido) {
+            JOptionPane.showMessageDialog(this, "Bienvenido: " + usuario);
+            this.dispose();
+            new MainMenu().setVisible(true);
+        } else {
+        JOptionPane.showMessageDialog(this, "Ocurrió un error al iniciar sesión", "Error", JOptionPane.ERROR_MESSAGE);
+
+        }
+
+    } catch (Exception ex) {
+        ex.printStackTrace();
+        ex.getMessage();
+        JOptionPane.showMessageDialog(this, "Ocurrió un error al iniciar sesión");
+        // System.out.println("Error: "+ex.getMessage());
+    }
+    }//GEN-LAST:event_btnLoginActionPerformed
+
+    private void btnRegistroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistroActionPerformed
+        Registro registro = new Registro();
+        registro.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnRegistroActionPerformed
 
         
     
@@ -137,13 +192,12 @@ public class LoginWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnLogin1;
+    private javax.swing.JButton btnLogin;
     private javax.swing.JButton btnRegistro;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblCineBienvenida;
-    private javax.swing.JLabel lblMensaje;
     private javax.swing.JLabel lblPassword;
     private javax.swing.JPasswordField txtPassword;
     private javax.swing.JTextField txtUsuario;

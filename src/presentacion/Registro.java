@@ -44,6 +44,7 @@ public class Registro extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(255, 102, 51));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -57,16 +58,22 @@ public class Registro extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel3.setText("Nombre de Usuario");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, -1, -1));
+
+        txtUsuario.setBackground(new java.awt.Color(51, 153, 255));
         jPanel1.add(txtUsuario, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 110, 160, -1));
+
+        txtPassword.setBackground(new java.awt.Color(51, 153, 255));
         jPanel1.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 170, 170, -1));
 
+        btnRegistro.setBackground(new java.awt.Color(51, 255, 51));
+        btnRegistro.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnRegistro.setText("Registrarse");
         btnRegistro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegistroActionPerformed(evt);
             }
         });
-        jPanel1.add(btnRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 250, 140, 40));
+        jPanel1.add(btnRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 250, 140, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
