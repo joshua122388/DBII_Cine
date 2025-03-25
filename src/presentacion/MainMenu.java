@@ -26,101 +26,45 @@ public class MainMenu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
-        btnClientes = new javax.swing.JButton();
-        btnPeliculas = new javax.swing.JButton();
-        btnFunciones = new javax.swing.JButton();
-        btnBoletos = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setText("Sistema de Gestión de Cine");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(121, 17, -1, -1));
+        jButton2.setBackground(new java.awt.Color(0, 204, 102));
+        jButton2.setText("Funciones");
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 130, -1));
 
-        btnClientes.setText("Clientes");
-        btnClientes.addActionListener(new java.awt.event.ActionListener() {
+        jButton3.setBackground(new java.awt.Color(255, 204, 0));
+        jButton3.setText("Clientes");
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 130, -1));
+
+        jButton4.setBackground(new java.awt.Color(204, 102, 0));
+        jButton4.setText("Boletos");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnClientesActionPerformed(evt);
+                jButton4ActionPerformed(evt);
             }
         });
+        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 130, -1));
 
-        btnPeliculas.setText("Películas");
-        btnPeliculas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPeliculasActionPerformed(evt);
-            }
-        });
+        jButton5.setBackground(new java.awt.Color(0, 102, 153));
+        jButton5.setText("Peliculas");
+        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 130, -1));
 
-        btnFunciones.setText("Funciones");
-        btnFunciones.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFuncionesActionPerformed(evt);
-            }
-        });
-
-        btnBoletos.setText("Compra Boletos");
-        btnBoletos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBoletosActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnClientes)
-                .addGap(18, 18, 18)
-                .addComponent(btnPeliculas)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnFunciones)
-                .addGap(18, 18, 18)
-                .addComponent(btnBoletos)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnClientes)
-                    .addComponent(btnPeliculas)
-                    .addComponent(btnFunciones)
-                    .addComponent(btnBoletos))
-                .addContainerGap(62, Short.MAX_VALUE))
-        );
-
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 50, -1, -1));
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/imagenes/MainMenu.jpg"))); // NOI18N
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-3, -4, 530, 350));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnPeliculasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPeliculasActionPerformed
-       VistasCartelera peliculas = new VistasCartelera();
-       peliculas.setVisible(true);
-    }//GEN-LAST:event_btnPeliculasActionPerformed
-
-    private void btnFuncionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFuncionesActionPerformed
-       FuncionesWindow funcion = new FuncionesWindow();
-       funcion.setVisible(true);
-       this.dispose();
-    }//GEN-LAST:event_btnFuncionesActionPerformed
-
-    private void btnBoletosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBoletosActionPerformed
-         CompraBoletosWindow boletos = new CompraBoletosWindow();
-         boletos.setVisible(true);
-         this.dispose();
-    }//GEN-LAST:event_btnBoletosActionPerformed
-
-    private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
-        ClientesWindow clientes = new ClientesWindow();
-        clientes.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_btnClientesActionPerformed
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -159,10 +103,49 @@ public class MainMenu extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBoletos;
+    private javax.swing.JButton btnBoletos1;
+    private javax.swing.JButton btnBoletos2;
+    private javax.swing.JButton btnBoletos3;
+    private javax.swing.JButton btnBoletos4;
+    private javax.swing.JButton btnBoletos5;
+    private javax.swing.JButton btnBoletos6;
+    private javax.swing.JButton btnBoletos7;
     private javax.swing.JButton btnClientes;
+    private javax.swing.JButton btnClientes1;
+    private javax.swing.JButton btnClientes2;
+    private javax.swing.JButton btnClientes3;
+    private javax.swing.JButton btnClientes4;
+    private javax.swing.JButton btnClientes5;
+    private javax.swing.JButton btnClientes6;
+    private javax.swing.JButton btnClientes7;
     private javax.swing.JButton btnFunciones;
+    private javax.swing.JButton btnFunciones1;
+    private javax.swing.JButton btnFunciones2;
+    private javax.swing.JButton btnFunciones3;
+    private javax.swing.JButton btnFunciones4;
+    private javax.swing.JButton btnFunciones5;
+    private javax.swing.JButton btnFunciones6;
+    private javax.swing.JButton btnFunciones7;
     private javax.swing.JButton btnPeliculas;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton btnPeliculas1;
+    private javax.swing.JButton btnPeliculas2;
+    private javax.swing.JButton btnPeliculas3;
+    private javax.swing.JButton btnPeliculas4;
+    private javax.swing.JButton btnPeliculas5;
+    private javax.swing.JButton btnPeliculas6;
+    private javax.swing.JButton btnPeliculas7;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     // End of variables declaration//GEN-END:variables
 }
