@@ -147,7 +147,6 @@ private void cargarFunciones() {
         cmbPelicula = new javax.swing.JComboBox<>();
         lblPeliculas = new javax.swing.JLabel();
         lblSala = new javax.swing.JLabel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
         brnFiltro = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -180,7 +179,6 @@ private void cargarFunciones() {
 
         lblSala.setText("Fecha Función");
         jPanel1.add(lblSala, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 260, -1, -1));
-        jPanel1.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 260, 160, -1));
 
         brnFiltro.setText("Aplicar");
         jPanel1.add(brnFiltro, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 330, -1, -1));
@@ -228,7 +226,6 @@ private void cargarFunciones() {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton brnFiltro;
     private javax.swing.JComboBox<String> cmbPelicula;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblFunciones;

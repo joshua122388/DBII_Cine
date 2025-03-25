@@ -28,7 +28,6 @@ public class VistaVentaSnack extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jDateChooserSnack = new com.toedter.calendar.JDateChooser();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblVentaSnack = new javax.swing.JTable();
         btnCargarVentas = new javax.swing.JButton();
@@ -40,9 +39,6 @@ public class VistaVentaSnack extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         jLabel1.setText("Venta de Snacks");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, -1, -1));
-
-        jDateChooserSnack.setToolTipText("dd");
-        jPanel1.add(jDateChooserSnack, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 130, -1));
 
         tblVentaSnack.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -113,7 +109,6 @@ public class VistaVentaSnack extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCargarVentas;
-    private com.toedter.calendar.JDateChooser jDateChooserSnack;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

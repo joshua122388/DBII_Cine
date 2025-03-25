@@ -28,7 +28,6 @@ public class ReporteClienteTiquete extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jDateChooserCliente = new com.toedter.calendar.JDateChooser();
         btnGenerarReporte = new javax.swing.JButton();
         btnExportar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -42,9 +41,6 @@ public class ReporteClienteTiquete extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         jLabel1.setText("Reporte de Clientes Estrella");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 20, -1, -1));
-
-        jDateChooserCliente.setForeground(new java.awt.Color(0, 153, 255));
-        jPanel1.add(jDateChooserCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 200, 60));
 
         btnGenerarReporte.setText("Generar Reporte");
         jPanel1.add(btnGenerarReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 110, 170, 60));
@@ -149,7 +145,6 @@ public class ReporteClienteTiquete extends javax.swing.JFrame {
     private javax.swing.JButton btnExportar;
     private javax.swing.JButton btnGenerarReporte;
     private javax.swing.JButton btnMenuP1;
-    private com.toedter.calendar.JDateChooser jDateChooserCliente;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

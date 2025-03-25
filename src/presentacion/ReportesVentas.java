@@ -31,7 +31,6 @@ public class ReportesVentas extends javax.swing.JFrame {
         btnMenu = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblReporteVentaTiquetes = new javax.swing.JTable();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jButton3 = new javax.swing.JButton();
         btnExportar = new javax.swing.JButton();
 
@@ -65,9 +64,6 @@ public class ReportesVentas extends javax.swing.JFrame {
         jScrollPane1.setViewportView(tblReporteVentaTiquetes);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, 910, -1));
-
-        jDateChooser1.setForeground(new java.awt.Color(0, 153, 255));
-        jPanel1.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, 200, 60));
 
         jButton3.setText("Generar Reporte Ventas");
         jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 110, 170, 60));
@@ -150,7 +146,6 @@ public class ReportesVentas extends javax.swing.JFrame {
     private javax.swing.JButton btnExportar;
     private javax.swing.JButton btnMenu;
     private javax.swing.JButton jButton3;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
