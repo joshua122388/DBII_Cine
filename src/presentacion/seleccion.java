@@ -15,7 +15,8 @@ public class seleccion extends javax.swing.JFrame {
      * Creates new form seleccion
      */
     public seleccion() {
-        initComponents();    
+        initComponents();  
+        setLocationRelativeTo(null);
     }
     
 
@@ -36,6 +37,8 @@ public class seleccion extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Eleccion de usuario");
+        setBackground(new java.awt.Color(153, 153, 0));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         jLabel1.setText("Elije tu tipo de Usuario");

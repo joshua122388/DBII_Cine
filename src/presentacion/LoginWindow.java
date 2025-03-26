@@ -43,6 +43,7 @@ public class LoginWindow extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Login Usuario");
 
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -147,8 +148,9 @@ public class LoginWindow extends javax.swing.JFrame {
             this.dispose();
             new MainMenu().setVisible(true);
         } else {
-        JOptionPane.showMessageDialog(this, "Ocurrió un error al iniciar sesión", "Error", JOptionPane.ERROR_MESSAGE);
-
+        JOptionPane.showMessageDialog(this, "Credenciales Incorrectas, Intentelo otra vez!", "Error", JOptionPane.ERROR_MESSAGE);
+                txtUsuario.setText("");
+                txtPassword.setText("");
         }
 
     } catch (Exception ex) {

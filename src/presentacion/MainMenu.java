@@ -15,6 +15,7 @@ public class MainMenu extends javax.swing.JFrame {
      */
     public MainMenu() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -29,7 +30,9 @@ public class MainMenu extends javax.swing.JFrame {
         btnVentanaFuncion = new javax.swing.JButton();
         btnVentanaBoleto = new javax.swing.JButton();
         btnVentanaPeliculas = new javax.swing.JButton();
+        btnSalir = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
+        btnVentanaBoleto1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu Principal");
@@ -42,7 +45,7 @@ public class MainMenu extends javax.swing.JFrame {
                 btnVentanaFuncionActionPerformed(evt);
             }
         });
-        getContentPane().add(btnVentanaFuncion, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 130, -1));
+        getContentPane().add(btnVentanaFuncion, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 130, -1));
 
         btnVentanaBoleto.setBackground(new java.awt.Color(204, 102, 0));
         btnVentanaBoleto.setText("Boletos");
@@ -51,7 +54,7 @@ public class MainMenu extends javax.swing.JFrame {
                 btnVentanaBoletoActionPerformed(evt);
             }
         });
-        getContentPane().add(btnVentanaBoleto, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 130, -1));
+        getContentPane().add(btnVentanaBoleto, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 130, -1));
 
         btnVentanaPeliculas.setBackground(new java.awt.Color(255, 204, 51));
         btnVentanaPeliculas.setText("Peliculas");
@@ -60,10 +63,28 @@ public class MainMenu extends javax.swing.JFrame {
                 btnVentanaPeliculasActionPerformed(evt);
             }
         });
-        getContentPane().add(btnVentanaPeliculas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 130, -1));
+        getContentPane().add(btnVentanaPeliculas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 130, -1));
+
+        btnSalir.setBackground(new java.awt.Color(0, 102, 255));
+        btnSalir.setText("Salir");
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 130, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/imagenes/MainMenu.jpg"))); // NOI18N
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 530, 350));
+
+        btnVentanaBoleto1.setBackground(new java.awt.Color(204, 102, 0));
+        btnVentanaBoleto1.setText("Boletos");
+        btnVentanaBoleto1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVentanaBoleto1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnVentanaBoleto1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 130, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -85,6 +106,14 @@ public class MainMenu extends javax.swing.JFrame {
         funcion.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVentanaFuncionActionPerformed
+
+    private void btnVentanaBoleto1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentanaBoleto1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnVentanaBoleto1ActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnSalirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -122,7 +151,9 @@ public class MainMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnSalir;
     private javax.swing.JButton btnVentanaBoleto;
+    private javax.swing.JButton btnVentanaBoleto1;
     private javax.swing.JButton btnVentanaFuncion;
     private javax.swing.JButton btnVentanaPeliculas;
     private javax.swing.JLabel jLabel2;
