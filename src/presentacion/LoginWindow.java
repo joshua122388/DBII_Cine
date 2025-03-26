@@ -3,19 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package presentacion;
-import LogicaNegocio.EncriptadorSHA256;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import javax.swing.JOptionPane;
-import accesoDatos.ConexionSQL;
-import presentacion.MainMenu;
-import Seguridad.Encriptador;
-import java.awt.Color;
 import entidades.*;
 import Servicios.*;
-import logicaNegocio.*;
+
 /**
  *
  * @author contr
@@ -27,6 +18,7 @@ public class LoginWindow extends javax.swing.JFrame {
      */
     public LoginWindow() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -47,6 +39,8 @@ public class LoginWindow extends javax.swing.JFrame {
         txtPassword = new javax.swing.JPasswordField();
         btnRegistro = new javax.swing.JButton();
         btnLogin = new javax.swing.JButton();
+        btnLogin1 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -92,6 +86,26 @@ public class LoginWindow extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 220, 140, 40));
+
+        btnLogin1.setBackground(new java.awt.Color(102, 255, 102));
+        btnLogin1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnLogin1.setText("Login");
+        btnLogin1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogin1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnLogin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 220, 140, 40));
+
+        jButton1.setBackground(new java.awt.Color(255, 255, 51));
+        jButton1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jButton1.setText("Salir");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 280, 120, 50));
 
         jPanel2.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 520, 390));
 
@@ -151,6 +165,14 @@ public class LoginWindow extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnRegistroActionPerformed
 
+    private void btnLogin1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogin1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnLogin1ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
         
     
     
@@ -193,7 +215,9 @@ public class LoginWindow extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLogin;
+    private javax.swing.JButton btnLogin1;
     private javax.swing.JButton btnRegistro;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

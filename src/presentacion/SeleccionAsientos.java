@@ -23,11 +23,11 @@ public class SeleccionAsientos extends javax.swing.JFrame {
      */
     public SeleccionAsientos() {
         initComponents();
-        
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
         
                 setTitle("Asientos Dispobibles");
         setSize(1100, 800);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
 

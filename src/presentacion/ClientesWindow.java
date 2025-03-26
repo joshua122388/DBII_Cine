@@ -177,6 +177,7 @@ private void eliminarCliente() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(0, 204, 204));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
@@ -203,6 +204,7 @@ private void eliminarCliente() {
         jPanel1.add(txtIDCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 130, -1));
         jPanel1.add(txtIDMembresia, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 300, 170, -1));
 
+        btnEliminar.setBackground(new java.awt.Color(255, 153, 0));
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -211,6 +213,7 @@ private void eliminarCliente() {
         });
         jPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 320, 120, 40));
 
+        tblClentes.setBackground(new java.awt.Color(153, 153, 153));
         tblClentes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -239,6 +242,7 @@ private void eliminarCliente() {
         jPanel1.add(txtNombreCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 160, 110, -1));
         jPanel1.add(txtCorreoCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 200, 180, -1));
 
+        btnActualizar.setBackground(new java.awt.Color(0, 102, 255));
         btnActualizar.setText("Actualizar");
         btnActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -259,6 +263,7 @@ private void eliminarCliente() {
         });
         jPanel1.add(btnActualizar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 320, 110, 40));
 
+        brnRegresar.setBackground(new java.awt.Color(204, 204, 0));
         brnRegresar.setText("Regresar");
         brnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -20,6 +20,7 @@ public class FuncionesWindow extends javax.swing.JFrame {
         initComponents();
         cargarFunciones(); // Llenar la tabla al abrir la ventana
         cargarPeliculas(); // Llenar ComboBox con películas
+        setLocationRelativeTo(null);
     }
      private void cargarPeliculas() {
         try {
@@ -154,11 +155,14 @@ private void cargarFunciones() {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jPanel1.setBackground(new java.awt.Color(0, 102, 102));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        lblFunciones.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         lblFunciones.setText("Funciones del Cine");
-        jPanel1.add(lblFunciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 20, -1, -1));
+        jPanel1.add(lblFunciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 20, -1, -1));
 
+        tblFunciones.setBackground(new java.awt.Color(153, 153, 0));
         tblFunciones.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -182,19 +186,21 @@ private void cargarFunciones() {
         lblSala.setText("Fecha Función");
         jPanel1.add(lblSala, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 260, -1, -1));
 
+        brnFiltro.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         brnFiltro.setText("Aplicar");
-        jPanel1.add(brnFiltro, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 330, -1, -1));
+        jPanel1.add(brnFiltro, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 330, -1, -1));
 
+        btnRegresar.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         btnRegresar.setText("Regresar");
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegresarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 330, -1, -1));
+        jPanel1.add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 330, -1, -1));
         jPanel1.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 260, 130, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 830, 460));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 790, 410));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents

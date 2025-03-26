@@ -58,9 +58,8 @@ private void cargarPeliculas() {
             Connection conn = ConexionSQL.conectar();
             String query = "INSERT INTO Peliculas (titulo, genero, duracion) VALUES (?, ?, ?)";
             PreparedStatement stmt = conn.prepareStatement(query);
-            stmt.setString(1, txtTitulo.getText());
-            stmt.setString(2, txtGenero.getText());
-            stmt.setInt(3, Integer.parseInt(txtDuracion.getText()));
+            stmt.setString(1, txtClasificacion.getText());
+            stmt.setString(2, txtClasificacion.getText());
             stmt.executeUpdate();
 
             JOptionPane.showMessageDialog(this, "Película agregada correctamente.");
@@ -77,10 +76,8 @@ private void cargarPeliculas() {
             Connection conn = ConexionSQL.conectar();
             String query = "UPDATE Peliculas SET titulo=?, genero=?, duracion=? WHERE id=?";
             PreparedStatement stmt = conn.prepareStatement(query);
-            stmt.setString(1, txtTitulo.getText());
-            stmt.setString(2, txtGenero.getText());
-            stmt.setInt(3, Integer.parseInt(txtDuracion.getText()));
-            stmt.setInt(4, Integer.parseInt(txtID.getText()));
+            stmt.setString(1, txtClasificacion.getText());
+            stmt.setString(2, txtClasificacion.getText());
             stmt.executeUpdate();
 
             JOptionPane.showMessageDialog(this, "Película actualizada correctamente.");
@@ -97,7 +94,6 @@ private void cargarPeliculas() {
             Connection conn = ConexionSQL.conectar();
             String query = "DELETE FROM Peliculas WHERE id=?";
             PreparedStatement stmt = conn.prepareStatement(query);
-            stmt.setInt(1, Integer.parseInt(txtID.getText()));
             stmt.executeUpdate();
 
             JOptionPane.showMessageDialog(this, "Película eliminada correctamente.");
@@ -117,31 +113,26 @@ private void cargarPeliculas() {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        lblPeliculas = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblPeliculas = new javax.swing.JTable();
-        lblID = new javax.swing.JLabel();
-        txtID = new javax.swing.JTextField();
-        lblNombre = new javax.swing.JLabel();
-        txtTitulo = new javax.swing.JTextField();
-        lblGenero = new javax.swing.JLabel();
-        txtGenero = new javax.swing.JTextField();
-        lblDuracion = new javax.swing.JLabel();
-        txtDuracion = new javax.swing.JTextField();
-        btnAgregar = new javax.swing.JButton();
-        btnActualizar = new javax.swing.JButton();
-        btnEliminar = new javax.swing.JButton();
-        btnCargar = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        txtClasificacion = new javax.swing.JTextField();
+        lblClasificacion = new javax.swing.JLabel();
+        lblTitulo1 = new javax.swing.JLabel();
+        txtTitulo1 = new javax.swing.JTextField();
+        lblGenero1 = new javax.swing.JLabel();
+        txtGenero1 = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Peliculas");
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lblPeliculas.setText("Películas disponibles en el Cine");
-        jPanel1.add(lblPeliculas, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, -1, 30));
-
+        tblPeliculas.setBackground(new java.awt.Color(0, 204, 153));
         tblPeliculas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -155,37 +146,41 @@ private void cargarPeliculas() {
         ));
         jScrollPane1.setViewportView(tblPeliculas);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 540, 160));
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 20, -1, 330));
 
-        lblID.setText("ID: ");
-        jPanel1.add(lblID, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 240, -1, -1));
-        jPanel1.add(txtID, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 260, -1, -1));
+        jButton2.setBackground(new java.awt.Color(0, 153, 102));
+        jButton2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jButton2.setText("Actualizar");
+        jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 300, -1, -1));
 
-        lblNombre.setText("Título:");
-        jPanel1.add(lblNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 240, -1, -1));
-        jPanel1.add(txtTitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 260, -1, -1));
+        jButton3.setBackground(new java.awt.Color(204, 153, 0));
+        jButton3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jButton3.setText("Eliminar");
+        jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 300, 110, -1));
+        jPanel2.add(txtClasificacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 200, 220, -1));
 
-        lblGenero.setText("Género: ");
-        jPanel1.add(lblGenero, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 240, -1, -1));
-        jPanel1.add(txtGenero, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 260, -1, -1));
+        lblClasificacion.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblClasificacion.setForeground(new java.awt.Color(255, 255, 255));
+        lblClasificacion.setText("Clasificación");
+        jPanel2.add(lblClasificacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 200, 100, -1));
+        lblClasificacion.getAccessibleContext().setAccessibleName("lblTitulo");
 
-        lblDuracion.setText("Duración: ");
-        jPanel1.add(lblDuracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 240, -1, -1));
-        jPanel1.add(txtDuracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 260, -1, -1));
+        lblTitulo1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblTitulo1.setForeground(new java.awt.Color(255, 255, 255));
+        lblTitulo1.setText("Titulo");
+        jPanel2.add(lblTitulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 80, 50, -1));
+        jPanel2.add(txtTitulo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 80, 220, -1));
 
-        btnAgregar.setText("Agregar");
-        jPanel1.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 300, -1, -1));
+        lblGenero1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        lblGenero1.setForeground(new java.awt.Color(255, 255, 255));
+        lblGenero1.setText("Género");
+        jPanel2.add(lblGenero1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 140, 60, -1));
+        jPanel2.add(txtGenero1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 140, 220, -1));
 
-        btnActualizar.setText("Actualizar");
-        jPanel1.add(btnActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 300, -1, -1));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Resources/imagenes/cinema-background-wr0kcgjhcfsledgt.jpg"))); // NOI18N
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 970, 380));
 
-        btnEliminar.setText("Eliminar");
-        jPanel1.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 300, -1, -1));
-
-        btnCargar.setText("Cargar");
-        jPanel1.add(btnCargar, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 300, -1, -1));
-
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 510));
+        getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 970, 420));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -226,21 +221,17 @@ private void cargarPeliculas() {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnActualizar;
-    private javax.swing.JButton btnAgregar;
-    private javax.swing.JButton btnCargar;
-    private javax.swing.JButton btnEliminar;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JLabel lblDuracion;
-    private javax.swing.JLabel lblGenero;
-    private javax.swing.JLabel lblID;
-    private javax.swing.JLabel lblNombre;
-    private javax.swing.JLabel lblPeliculas;
+    private javax.swing.JLabel lblClasificacion;
+    private javax.swing.JLabel lblGenero1;
+    private javax.swing.JLabel lblTitulo1;
     private javax.swing.JTable tblPeliculas;
-    private javax.swing.JTextField txtDuracion;
-    private javax.swing.JTextField txtGenero;
-    private javax.swing.JTextField txtID;
-    private javax.swing.JTextField txtTitulo;
+    private javax.swing.JTextField txtClasificacion;
+    private javax.swing.JTextField txtGenero1;
+    private javax.swing.JTextField txtTitulo1;
     // End of variables declaration//GEN-END:variables
 }
