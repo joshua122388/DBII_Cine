@@ -6,7 +6,8 @@ package presentacion;
 
 import javax.swing.*;
 import java.awt.*;
-
+import accesoDatos.ConexionSQL;
+import java.sql.*;
 /**
  *
  * @author contr
@@ -14,6 +15,7 @@ import java.awt.*;
 public class SeleccionAsientos extends javax.swing.JFrame {
     
     private JPanel panelAsientos;
+    private int idFuncion;
     private final int filas = 18;
     private final int columnas = 20;
     private final String letras = "ABCDEFGHIJKLMNOPQR";
@@ -21,10 +23,15 @@ public class SeleccionAsientos extends javax.swing.JFrame {
     /**
      * Creates new form SeleccionAsientos
      */
-    public SeleccionAsientos() {
+    public SeleccionAsientos(int idFuncion) {
+        this.idFuncion = idFuncion;
         initComponents();
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
+        crearPanelAsientos();
+        crearMapaAsientos();
+        bloquearAsientosReservados();  // <- Aquí consultamos la BD
+        
         
                 setTitle("Asientos Dispobibles");
         setSize(1100, 800);
@@ -56,11 +63,11 @@ public class SeleccionAsientos extends javax.swing.JFrame {
 
                 // Colores por zona
                 if (fila < 2) {
-                    boton.setBackground(Color.ORANGE); // VIP
+                    boton.setBackground(Color.GREEN); // VIP
                 } else if (fila < 6) {
                     boton.setBackground(Color.GREEN); // Preferencial
                 } else {
-                    boton.setBackground(Color.RED); // General
+                    boton.setBackground(Color.GREEN); // General
                 }
 
                 boton.setOpaque(true);
@@ -83,25 +90,45 @@ public class SeleccionAsientos extends javax.swing.JFrame {
         JPanel leyenda = new JPanel(new FlowLayout(FlowLayout.CENTER));
         leyenda.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
 
-        // VIP
-        JLabel vipColor = crearColorBox(Color.ORANGE);
-        leyenda.add(vipColor);
-        leyenda.add(new JLabel("VIP"));
 
         // Preferencial
         JLabel preferencialColor = crearColorBox(Color.GREEN);
         leyenda.add(preferencialColor);
-        leyenda.add(new JLabel("Preferencial"));
-
-        // General
-        JLabel generalColor = crearColorBox(Color.RED);
-        leyenda.add(generalColor);
-        leyenda.add(new JLabel("General"));
+        leyenda.add(new JLabel("Asientos"));
         
         add(panelCentral, BorderLayout.CENTER);
         add(leyenda, BorderLayout.SOUTH);
         
     }
+    
+    
+    private void bloquearAsientosReservados() {
+    try (Connection conn = ConexionSQL.conectar()) {
+        String query = "SELECT Asiento FROM ReservaAsientos WHERE ID_Funcion = ?";
+        PreparedStatement stmt = conn.prepareStatement(query);
+        stmt.setInt(1, idFuncion);
+        ResultSet rs = stmt.executeQuery();
+
+        while (rs.next()) {
+            String asiento = rs.getString("Asiento");
+            char filaLetra = asiento.charAt(asiento.length() - 1);
+            int fila = "ABCDEFGHIJKLMNOPQR".indexOf(filaLetra);
+            int columna = Integer.parseInt(asiento.substring(0, asiento.length() - 1)) - 1;
+
+            if (fila >= 0 && columna >= 0 && fila < filas && columna < columnas) {
+                JButton boton = asientos[fila][columna];
+                boton.setEnabled(false);               // Deshabilita botón
+                boton.setBackground(Color.GRAY);       // Color gris para ocupado
+            }
+        }
+
+        rs.close();
+        stmt.close();
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Error al cargar asientos reservados: " + e.getMessage());
+    }
+}
+
 
     private void crearMapaAsientos() {
     JPanel panelAsientos = new JPanel();
@@ -140,6 +167,56 @@ public class SeleccionAsientos extends javax.swing.JFrame {
     pack();
     setLocationRelativeTo(null);
 }
+    
+    private void crearPanelAsientos() {
+    // Etiquetas laterales (filas)
+    JPanel etiquetasIzquierda = new JPanel(new GridLayout(filas, 1));
+    for (int i = 0; i < filas; i++) {
+        JLabel lbl = new JLabel(letras.charAt(i) + "", SwingConstants.RIGHT);
+        etiquetasIzquierda.add(lbl);
+    }
+
+    // Etiquetas superiores (columnas)
+    JPanel etiquetasArriba = new JPanel(new GridLayout(1, columnas));
+    for (int i = 1; i <= columnas; i++) {
+        JLabel lbl = new JLabel(String.valueOf(i), SwingConstants.CENTER);
+        etiquetasArriba.add(lbl);
+    }
+
+    // Panel principal de asientos
+    panelAsientos = new JPanel(new GridLayout(filas, columnas, 2, 2));
+    for (int fila = 0; fila < filas; fila++) {
+        for (int col = 0; col < columnas; col++) {
+            String etiqueta = (col + 1) + String.valueOf(letras.charAt(fila));
+            JButton boton = new JButton(etiqueta);
+            boton.setPreferredSize(new Dimension(30, 30));
+            boton.setBackground(Color.GREEN); // Por defecto
+            boton.setOpaque(true);
+            boton.setBorderPainted(false);
+            boton.setToolTipText("Asiento: " + etiqueta);
+            boton.setActionCommand(etiqueta);
+
+            asientos[fila][col] = boton;
+            panelAsientos.add(boton);
+        }
+    }
+
+    JPanel panelCentral = new JPanel(new BorderLayout());
+    panelCentral.add(etiquetasIzquierda, BorderLayout.WEST);
+    panelCentral.add(etiquetasArriba, BorderLayout.NORTH);
+    panelCentral.add(panelAsientos, BorderLayout.CENTER);
+
+    JPanel leyenda = new JPanel(new FlowLayout(FlowLayout.CENTER));
+    leyenda.add(crearColorBox(Color.GREEN));
+    leyenda.add(new JLabel("Asiento disponible"));
+    leyenda.add(crearColorBox(Color.GRAY));
+    leyenda.add(new JLabel("Asiento reservado"));
+
+    add(panelCentral, BorderLayout.CENTER);
+    add(leyenda, BorderLayout.SOUTH);
+}
+
+    
 
     
     private JLabel crearColorBox(Color color) {
@@ -176,37 +253,14 @@ public class SeleccionAsientos extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SeleccionAsientos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SeleccionAsientos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SeleccionAsientos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SeleccionAsientos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+public static void main(String args[]) {
+    java.awt.EventQueue.invokeLater(new Runnable() {
+        public void run() {
+            new CompraBoletosWindow().setVisible(true);
         }
-        //</editor-fold>
+    });
+}
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new SeleccionAsientos().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables

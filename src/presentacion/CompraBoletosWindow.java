@@ -13,6 +13,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class CompraBoletosWindow extends javax.swing.JFrame {
          private static final double PRECIO_BOLETO = 5.00;
+         private java.util.List<Integer> listaIdFunciones = new java.util.ArrayList<>();
+
     /**
      * Creates new form CompraBoletosWindow
      */
@@ -20,25 +22,40 @@ public class CompraBoletosWindow extends javax.swing.JFrame {
         initComponents();
         cargarFunciones();
     }
-         private void cargarFunciones() {
-        try {
-            Connection conn = ConexionSQL.conectar();
-            String query = "SELECT ID_Funcion, ID_Pelicula, Numero_Sala, Duracion FROM funcion";
-            PreparedStatement stmt = conn.prepareStatement(query);
-            ResultSet rs = stmt.executeQuery();
+    
+private void cargarFunciones() {
+    try {
+        Connection conn = ConexionSQL.conectar();
+        String query = "SELECT f.ID_Funcion, p.Titulo, f.Duracion, f.Numero_Sala " +
+                       "FROM funcion f JOIN pelicula p ON p.ID_Pelicula = f.ID_Pelicula";
+        PreparedStatement stmt = conn.prepareStatement(query);
+        ResultSet rs = stmt.executeQuery();
 
-            cmbFunciones.removeAllItems();
-            while (rs.next()) {
-                cmbFunciones.addItem(rs.getInt("ID_Funcion") + " - Película " + rs.getInt("ID_Pelicula") + " - Sala " + rs.getString("Numero_Sala") + " - " + rs.getString("Duracion"));
-            }
+        cmbFunciones.removeAllItems();
+        listaIdFunciones.clear(); // Limpiar la lista cada vez
 
-            rs.close();
-            stmt.close();
-            conn.close();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Error al cargar funciones: " + ex.getMessage());
+        while (rs.next()) {
+            int idFuncion = rs.getInt("ID_Funcion");
+            String titulo = rs.getString("Titulo");
+            String duracion = rs.getString("Duracion");
+            String sala = rs.getString("Numero_Sala");
+
+            // Guardar el ID internamente
+            listaIdFunciones.add(idFuncion);
+
+            // Mostrar al usuario solo los datos relevantes
+            cmbFunciones.addItem(titulo + " - Sala " + sala + " - " + duracion);
         }
-        }
+
+        rs.close();
+        stmt.close();
+        conn.close();
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Error al cargar funciones: " + ex.getMessage());
+    }
+}
+
+
          
         private void calcularTotal() {
     int cantidad = (int) spnCantidad.getValue();
@@ -181,7 +198,12 @@ private void btnVerComprasActionPerformed(java.awt.event.ActionEvent evt) {
         jPanel1.add(btnCartelera1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 250, -1, -1));
 
         cmbFunciones.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel1.add(cmbFunciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, -1, -1));
+        cmbFunciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbFuncionesActionPerformed(evt);
+            }
+        });
+        jPanel1.add(cmbFunciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, 320, -1));
 
         bntRegresar.setText("Regresar");
         bntRegresar.addActionListener(new java.awt.event.ActionListener() {
@@ -191,14 +213,25 @@ private void btnVerComprasActionPerformed(java.awt.event.ActionEvent evt) {
         });
         jPanel1.add(bntRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 460, -1, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 520, 510));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 620, 510));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAsientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsientoActionPerformed
-        SeleccionAsientos asiento = new SeleccionAsientos();
-        asiento.setVisible(true);
+    
+    int index = cmbFunciones.getSelectedIndex();
+
+    if (index >= 0) {
+        int idFuncionSeleccionada = listaIdFunciones.get(index);
+
+        // Abrir ventana de selección de asientos con la función seleccionada
+        SeleccionAsientos ventanaAsientos = new SeleccionAsientos(idFuncionSeleccionada);
+        ventanaAsientos.setVisible(true);
+    } else {
+        JOptionPane.showMessageDialog(this, "Por favor seleccione una función antes de continuar.");
+    }
+        
     }//GEN-LAST:event_btnAsientoActionPerformed
 
     private void bntRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntRegresarActionPerformed
@@ -206,6 +239,10 @@ private void btnVerComprasActionPerformed(java.awt.event.ActionEvent evt) {
                menu.setVisible(true);
                this.dispose();
     }//GEN-LAST:event_bntRegresarActionPerformed
+
+    private void cmbFuncionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbFuncionesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbFuncionesActionPerformed
 
     /**
      * @param args the command line arguments
