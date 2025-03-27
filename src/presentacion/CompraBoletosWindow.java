@@ -14,13 +14,23 @@ import javax.swing.table.DefaultTableModel;
 public class CompraBoletosWindow extends javax.swing.JFrame {
          private static final double PRECIO_BOLETO = 5.00;
          private java.util.List<Integer> listaIdFunciones = new java.util.ArrayList<>();
+         
 
     /**
      * Creates new form CompraBoletosWindow
      */
     public CompraBoletosWindow() {
+        
         initComponents();
         cargarFunciones();
+        
+        tblCompras.setModel(new javax.swing.table.DefaultTableModel(
+    new Object [][] {},
+    new String [] {
+        "Película", "Sala", "Duración", "Cantidad", "Asientos"
+    }
+        ));
+
     }
     
 private void cargarFunciones() {
@@ -189,7 +199,7 @@ private void btnVerComprasActionPerformed(java.awt.event.ActionEvent evt) {
         ));
         jScrollPane1.setViewportView(tblCompras);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 340, 320, 110));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 340, 480, 110));
 
         btnCalcular1.setText("Calcular Total");
         jPanel1.add(btnCalcular1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, -1, -1));
@@ -219,18 +229,26 @@ private void btnVerComprasActionPerformed(java.awt.event.ActionEvent evt) {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAsientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAsientoActionPerformed
+
+    String[] partes = cmbFunciones.getSelectedItem().toString().split(" - ");
+    String pelicula = partes[0].trim();
+    String sala = partes[1].replace("Sala", "").trim();
+    String duracion = partes[2].trim();
+    int cantidad = (int) spnCantidad.getValue();
     
-    int index = cmbFunciones.getSelectedIndex();
+        if (cantidad <= 0) {
+        JOptionPane.showMessageDialog(this, "Debe especificar la cantidad de tiquetes a comprar.", "Aviso", JOptionPane.WARNING_MESSAGE);
+        return;
+            }
 
-    if (index >= 0) {
-        int idFuncionSeleccionada = listaIdFunciones.get(index);
-
-        // Abrir ventana de selección de asientos con la función seleccionada
-        SeleccionAsientos ventanaAsientos = new SeleccionAsientos(idFuncionSeleccionada);
-        ventanaAsientos.setVisible(true);
-    } else {
-        JOptionPane.showMessageDialog(this, "Por favor seleccione una función antes de continuar.");
-    }
+    SeleccionAsientos seleccion = new SeleccionAsientos(
+        pelicula,
+        sala,
+        duracion,
+        cantidad
+    );
+    seleccion.setParentWindow(this); // <- necesario para poder actualizar la tabla desde SeleccionAsientos
+    seleccion.setVisible(true);
         
     }//GEN-LAST:event_btnAsientoActionPerformed
 
@@ -278,6 +296,11 @@ private void btnVerComprasActionPerformed(java.awt.event.ActionEvent evt) {
             }
         });
     }
+    
+    public javax.swing.JTable getTblCompras() {
+    return tblCompras;
+}
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bntRegresar;

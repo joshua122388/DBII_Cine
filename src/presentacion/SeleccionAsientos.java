@@ -8,6 +8,8 @@ import javax.swing.*;
 import java.awt.*;
 import accesoDatos.ConexionSQL;
 import java.sql.*;
+import java.util.ArrayList;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author contr
@@ -20,86 +22,65 @@ public class SeleccionAsientos extends javax.swing.JFrame {
     private final int columnas = 20;
     private final String letras = "ABCDEFGHIJKLMNOPQR";
     private JButton[][] asientos = new JButton[filas][columnas];
+    private String pelicula;
+    private int cantidadPermitida;
+    private String sala;
+    private String duracion;
+    private int cantidad;
+    private CompraBoletosWindow parentWindow;
+    private java.util.List<String> asientosSeleccionados = new ArrayList<>();
     /**
      * Creates new form SeleccionAsientos
      */
-    public SeleccionAsientos(int idFuncion) {
-        this.idFuncion = idFuncion;
-        initComponents();
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setLocationRelativeTo(null);
-        crearPanelAsientos();
-        crearMapaAsientos();
-        bloquearAsientosReservados();  // <- Aquí consultamos la BD
-        
-        
-                setTitle("Asientos Dispobibles");
-        setSize(1100, 800);
-        setLocationRelativeTo(null);
-        setLayout(new BorderLayout());
+public SeleccionAsientos(String pelicula, String sala, String duracion, int cantidad) {
+    this.pelicula = pelicula;
+    this.sala = sala;
+    this.duracion = duracion;
+    this.cantidadPermitida = cantidad;
 
-        // Etiquetas laterales (filas)
-        JPanel etiquetasIzquierda = new JPanel(new GridLayout(filas, 1));
-        for (int i = 0; i < filas; i++) {
-            JLabel lbl = new JLabel(letras.charAt(i) + "", SwingConstants.RIGHT);
-            etiquetasIzquierda.add(lbl);
-        }
+    setTitle("Asientos Disponibles");
+    setSize(1100, 800);
+    setLocationRelativeTo(null);
+    setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+    setLayout(new BorderLayout());
 
-        // Etiquetas superiores (columnas)
-        JPanel etiquetasArriba = new JPanel(new GridLayout(1, columnas));
-        for (int i = 1; i <= columnas; i++) {
-            JLabel lbl = new JLabel(String.valueOf(i), SwingConstants.CENTER);
-            etiquetasArriba.add(lbl);
-        }
+    crearPanelAsientos();            // Crea botones y acción
+    bloquearAsientosReservados();   // Bloquea ya ocupados
 
-        // Panel principal de asientos
-        panelAsientos = new JPanel(new GridLayout(filas, columnas, 2, 2));
-        for (int fila = 0; fila < filas; fila++) {
-            for (int col = 0; col < columnas; col++) {
-                // Etiqueta tipo "1A", "2A", ..., "33R"
-                String etiqueta = (col + 1) + String.valueOf(letras.charAt(fila));
-                JButton boton = new JButton(etiqueta); // Mostrar la etiqueta en el botón
-                boton.setPreferredSize(new Dimension(30, 30));
-
-                // Colores por zona
-                if (fila < 2) {
-                    boton.setBackground(Color.GREEN); // VIP
-                } else if (fila < 6) {
-                    boton.setBackground(Color.GREEN); // Preferencial
-                } else {
-                    boton.setBackground(Color.GREEN); // General
-                }
-
-                boton.setOpaque(true);
-                boton.setBorderPainted(false);
-                boton.setToolTipText("Asiento: " + etiqueta);
-                boton.setActionCommand(etiqueta);
-
-                asientos[fila][col] = boton;
-                panelAsientos.add(boton);
-            }
-        }
-
-
-        // Contenedor con etiquetas + panel de asientos
-        JPanel panelCentral = new JPanel(new BorderLayout());
-        panelCentral.add(etiquetasIzquierda, BorderLayout.WEST);
-        panelCentral.add(etiquetasArriba, BorderLayout.NORTH);
-        panelCentral.add(panelAsientos, BorderLayout.CENTER);
-
-        JPanel leyenda = new JPanel(new FlowLayout(FlowLayout.CENTER));
-        leyenda.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
-
-
-        // Preferencial
-        JLabel preferencialColor = crearColorBox(Color.GREEN);
-        leyenda.add(preferencialColor);
-        leyenda.add(new JLabel("Asientos"));
-        
-        add(panelCentral, BorderLayout.CENTER);
-        add(leyenda, BorderLayout.SOUTH);
-        
+    // Etiquetas laterales (filas)
+    JPanel etiquetasIzquierda = new JPanel(new GridLayout(filas, 1));
+    for (int i = 0; i < filas; i++) {
+        etiquetasIzquierda.add(new JLabel(letras.charAt(i) + "", SwingConstants.RIGHT));
     }
+
+    // Etiquetas superiores (columnas)
+    JPanel etiquetasArriba = new JPanel(new GridLayout(1, columnas));
+    for (int i = 1; i <= columnas; i++) {
+        etiquetasArriba.add(new JLabel(String.valueOf(i), SwingConstants.CENTER));
+    }
+
+    // Leyenda
+    JPanel leyenda = new JPanel(new FlowLayout(FlowLayout.CENTER));
+    leyenda.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
+    leyenda.add(crearColorBox(Color.GREEN));
+    leyenda.add(new JLabel("Asientos disponibles"));
+
+    // Panel central con etiquetas y asientos
+    JPanel panelCentral = new JPanel(new BorderLayout());
+    panelCentral.add(etiquetasIzquierda, BorderLayout.WEST);
+    panelCentral.add(etiquetasArriba, BorderLayout.NORTH);
+    panelCentral.add(new JScrollPane(panelAsientos), BorderLayout.CENTER);
+
+    // Agregar al JFrame
+    add(panelCentral, BorderLayout.CENTER);
+    add(leyenda, BorderLayout.SOUTH);
+
+    setVisible(true);
+}
+
+
+
+
     
     
     private void bloquearAsientosReservados() {
@@ -168,52 +149,84 @@ public class SeleccionAsientos extends javax.swing.JFrame {
     setLocationRelativeTo(null);
 }
     
-    private void crearPanelAsientos() {
-    // Etiquetas laterales (filas)
-    JPanel etiquetasIzquierda = new JPanel(new GridLayout(filas, 1));
-    for (int i = 0; i < filas; i++) {
-        JLabel lbl = new JLabel(letras.charAt(i) + "", SwingConstants.RIGHT);
-        etiquetasIzquierda.add(lbl);
+    public void setParentWindow(CompraBoletosWindow parentWindow) {
+    this.parentWindow = parentWindow;
     }
-
-    // Etiquetas superiores (columnas)
-    JPanel etiquetasArriba = new JPanel(new GridLayout(1, columnas));
-    for (int i = 1; i <= columnas; i++) {
-        JLabel lbl = new JLabel(String.valueOf(i), SwingConstants.CENTER);
-        etiquetasArriba.add(lbl);
-    }
-
-    // Panel principal de asientos
+    
+private void crearPanelAsientos() {
     panelAsientos = new JPanel(new GridLayout(filas, columnas, 2, 2));
+    asientosSeleccionados = new ArrayList<>(); // Asegúrate de declarar esta lista a nivel de clase
+
     for (int fila = 0; fila < filas; fila++) {
         for (int col = 0; col < columnas; col++) {
             String etiqueta = (col + 1) + String.valueOf(letras.charAt(fila));
             JButton boton = new JButton(etiqueta);
             boton.setPreferredSize(new Dimension(30, 30));
-            boton.setBackground(Color.GREEN); // Por defecto
+
+            // Color inicial disponible
+            boton.setBackground(Color.GREEN);
             boton.setOpaque(true);
             boton.setBorderPainted(false);
             boton.setToolTipText("Asiento: " + etiqueta);
             boton.setActionCommand(etiqueta);
+
+            // Acción de selección del botón
+boton.addActionListener(e -> {
+    JButton b = (JButton) e.getSource();
+
+    if (b.getBackground().equals(Color.GREEN)) {
+        if (asientosSeleccionados.size() >= cantidadPermitida) {
+            JOptionPane.showMessageDialog(this, "Solo puedes seleccionar " + cantidadPermitida + " asientos.");
+            return;
+        }
+
+        b.setBackground(Color.RED);
+        asientosSeleccionados.add(b.getText());
+
+        if (asientosSeleccionados.size() == cantidadPermitida) {
+            int respuesta = JOptionPane.showConfirmDialog(
+                this,
+                "¿Confirmar los asientos seleccionados?",
+                "Confirmación",
+                JOptionPane.YES_NO_OPTION
+            );
+
+            if (respuesta == JOptionPane.YES_OPTION) {
+                // Agregar datos a la tabla
+                DefaultTableModel model = (DefaultTableModel) parentWindow.getTblCompras().getModel();
+                model.addRow(new Object[]{
+                    pelicula,
+                    sala,
+                    duracion,
+                    cantidadPermitida,
+                    String.join(", ", asientosSeleccionados)
+                });
+
+                this.dispose(); // Cerrar ventana de asientos
+            }
+        }
+
+    } else if (b.getBackground().equals(Color.RED)) {
+        b.setBackground(Color.GREEN);
+        asientosSeleccionados.remove(b.getText());
+    }
+});
+
 
             asientos[fila][col] = boton;
             panelAsientos.add(boton);
         }
     }
 
-    JPanel panelCentral = new JPanel(new BorderLayout());
-    panelCentral.add(etiquetasIzquierda, BorderLayout.WEST);
-    panelCentral.add(etiquetasArriba, BorderLayout.NORTH);
-    panelCentral.add(panelAsientos, BorderLayout.CENTER);
+    // Mostrar en la ventana
+    JScrollPane scroll = new JScrollPane(panelAsientos);
+    getContentPane().add(scroll, BorderLayout.CENTER);
+    revalidate();
+    repaint();
+}
 
-    JPanel leyenda = new JPanel(new FlowLayout(FlowLayout.CENTER));
-    leyenda.add(crearColorBox(Color.GREEN));
-    leyenda.add(new JLabel("Asiento disponible"));
-    leyenda.add(crearColorBox(Color.GRAY));
-    leyenda.add(new JLabel("Asiento reservado"));
-
-    add(panelCentral, BorderLayout.CENTER);
-    add(leyenda, BorderLayout.SOUTH);
+    public java.util.List<String> getAsientosSeleccionados() {
+    return asientosSeleccionados;
 }
 
     
@@ -228,7 +241,7 @@ public class SeleccionAsientos extends javax.swing.JFrame {
     return label;
 }
 
-    
+
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
