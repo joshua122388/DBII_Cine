@@ -150,7 +150,6 @@ private void cargarFunciones() {
         lblSala = new javax.swing.JLabel();
         brnFiltro = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Funciones");
@@ -199,7 +198,6 @@ private void cargarFunciones() {
             }
         });
         jPanel1.add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 330, -1, -1));
-        jPanel1.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 260, 130, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 790, 410));
 
@@ -251,7 +249,6 @@ private void cargarFunciones() {
     private javax.swing.JButton brnFiltro;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JComboBox<String> cmbPelicula;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblFunciones;

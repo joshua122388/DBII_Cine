@@ -36,15 +36,27 @@ public class ReporteClienteTiquete extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(255, 102, 51));
+        jPanel1.setForeground(new java.awt.Color(51, 0, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Reporte de Clientes Estrella");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 20, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 20, -1, -1));
 
+        btnGenerarReporte.setBackground(new java.awt.Color(0, 0, 204));
+        btnGenerarReporte.setForeground(new java.awt.Color(255, 255, 255));
         btnGenerarReporte.setText("Generar Reporte");
+        btnGenerarReporte.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerarReporteActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnGenerarReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 110, 170, 60));
 
+        btnExportar.setBackground(new java.awt.Color(0, 0, 204));
+        btnExportar.setForeground(new java.awt.Color(255, 255, 255));
         btnExportar.setText("Exportar a formato PDF");
         btnExportar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -66,8 +78,10 @@ public class ReporteClienteTiquete extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblReporteClientes);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, 910, -1));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 190, 910, -1));
 
+        btnMenuP1.setBackground(new java.awt.Color(0, 0, 204));
+        btnMenuP1.setForeground(new java.awt.Color(255, 255, 255));
         btnMenuP1.setText("Menú Principal");
         btnMenuP1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -101,10 +115,16 @@ public class ReporteClienteTiquete extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExportarActionPerformed
 
     private void btnMenuP1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMenuP1ActionPerformed
-       MenuAdmin menu = new MenuAdmin();
-       menu.setVisible(true);
        this.dispose();
+        
+        MenuAdmin menu = new MenuAdmin();
+       menu.setVisible(true);
+      
     }//GEN-LAST:event_btnMenuP1ActionPerformed
+
+    private void btnGenerarReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarReporteActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnGenerarReporteActionPerformed
 
     /**
      * @param args the command line arguments
