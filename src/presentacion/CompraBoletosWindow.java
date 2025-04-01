@@ -157,10 +157,13 @@ private void btnVerComprasActionPerformed(java.awt.event.ActionEvent evt) {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jPanel1.setBackground(new java.awt.Color(255, 153, 0));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        lblCompraboletostitle.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        lblCompraboletostitle.setForeground(new java.awt.Color(255, 255, 255));
         lblCompraboletostitle.setText("Compra de Boletos para el Cine");
-        jPanel1.add(lblCompraboletostitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 30, -1, -1));
+        jPanel1.add(lblCompraboletostitle, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 30, -1, -1));
 
         lblFunciones.setText("Funciones :");
         jPanel1.add(lblFunciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 100, -1, -1));
@@ -172,6 +175,8 @@ private void btnVerComprasActionPerformed(java.awt.event.ActionEvent evt) {
         lblTotal.setText("Total:");
         jPanel1.add(lblTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 200, -1, -1));
 
+        btnAsiento.setBackground(new java.awt.Color(0, 0, 153));
+        btnAsiento.setForeground(new java.awt.Color(255, 255, 255));
         btnAsiento.setText("Selección de Asientos");
         btnAsiento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -180,10 +185,24 @@ private void btnVerComprasActionPerformed(java.awt.event.ActionEvent evt) {
         });
         jPanel1.add(btnAsiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 300, 160, -1));
 
+        btnComprarBoletos.setBackground(new java.awt.Color(0, 0, 153));
+        btnComprarBoletos.setForeground(new java.awt.Color(255, 255, 255));
         btnComprarBoletos.setText("Comprar Boletos: ");
+        btnComprarBoletos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnComprarBoletosActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnComprarBoletos, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 250, -1, -1));
 
+        btnVerCompras.setBackground(new java.awt.Color(0, 0, 153));
+        btnVerCompras.setForeground(new java.awt.Color(255, 255, 255));
         btnVerCompras.setText("Ver Compras");
+        btnVerCompras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVerComprasActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnVerCompras, new org.netbeans.lib.awtextra.AbsoluteConstraints(102, 300, 150, -1));
 
         tblCompras.setModel(new javax.swing.table.DefaultTableModel(
@@ -201,9 +220,18 @@ private void btnVerComprasActionPerformed(java.awt.event.ActionEvent evt) {
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 340, 480, 110));
 
+        btnCalcular1.setBackground(new java.awt.Color(0, 0, 153));
+        btnCalcular1.setForeground(new java.awt.Color(255, 255, 255));
         btnCalcular1.setText("Calcular Total");
+        btnCalcular1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCalcular1ActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnCalcular1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, -1, -1));
 
+        btnCartelera1.setBackground(new java.awt.Color(0, 0, 153));
+        btnCartelera1.setForeground(new java.awt.Color(255, 255, 255));
         btnCartelera1.setText("Ver Cartelera");
         jPanel1.add(btnCartelera1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 250, -1, -1));
 
@@ -215,6 +243,8 @@ private void btnVerComprasActionPerformed(java.awt.event.ActionEvent evt) {
         });
         jPanel1.add(cmbFunciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, 320, -1));
 
+        bntRegresar.setBackground(new java.awt.Color(0, 0, 153));
+        bntRegresar.setForeground(new java.awt.Color(255, 255, 255));
         bntRegresar.setText("Regresar");
         bntRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -261,6 +291,106 @@ private void btnVerComprasActionPerformed(java.awt.event.ActionEvent evt) {
     private void cmbFuncionesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbFuncionesActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbFuncionesActionPerformed
+
+    private void btnCalcular1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcular1ActionPerformed
+             // Obtener el tipo de boleto seleccionado
+    String tipoBoleto = (String) cboTipoBoleto.getSelectedItem(); // O usa el JComboBox si es un combo
+
+    // Obtener la cantidad de boletos
+    int cantidad = (int) spnCantidad.getValue(); // O usa el JSpinner si es un spinner
+
+    // Definir los precios
+    int precioRegular = 3000;
+    int precioVIP = 6000;
+    int precioPremium = 12000;
+    int precioTotal = 0;
+
+    // Calcular el total basado en el tipo de boleto seleccionado
+    switch (tipoBoleto) {
+        case "Regular":
+            precioTotal = precioRegular * cantidad;
+            break;
+        case "VIP":
+            precioTotal = precioVIP * cantidad;
+            break;
+        case "Premium":
+            precioTotal = precioPremium * cantidad;
+            break;
+        default:
+            JOptionPane.showMessageDialog(this, "Tipo de boleto no válido.");
+            return;
+    }
+
+    // Mostrar el total en el JLabel de total
+    lblTotal.setText("Total: " + precioTotal);
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCalcular1ActionPerformed
+
+    private void btnComprarBoletosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarBoletosActionPerformed
+           // Obtener los datos de la compra
+    String tipoBoleto = (String) cboTipoBoleto.getSelectedItem();
+    int cantidad = (int) spnCantidad.getValue();
+    int total = Integer.parseInt(lblTotal.getText().replace("Total: ", ""));
+    String asiento = txtAsiento.getText();  // Asiento seleccionado
+
+    // Obtener el ID del cliente (esto puede estar almacenado en la sesión o en un campo de texto oculto)
+    int idCliente = obtenerIdCliente();
+
+    try (Connection conn = ConexionSQL.conectar()) {
+        // Insertar los datos de la compra en la base de datos
+        String query = "INSERT INTO tiquete (Asiento, Precio, Cantidad, ID_Cliente) VALUES (?, ?, ?, ?)";
+        PreparedStatement stmt = conn.prepareStatement(query);
+        stmt.setString(1, asiento);
+        stmt.setInt(2, total);
+        stmt.setInt(3, cantidad);
+        stmt.setInt(4, idCliente);
+        stmt.executeUpdate();
+
+        JOptionPane.showMessageDialog(this, "Compra realizada correctamente.");
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Error al registrar la compra: " + e.getMessage());
+    }  
+
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnComprarBoletosActionPerformed
+
+    private void btnVerComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerComprasActionPerformed
+             int idCliente = obtenerIdCliente();
+
+    try (Connection conn = ConexionSQL.conectar()) {
+        String query = "SELECT t.Asiento, t.Precio, t.Cantidad, f.Fecha, f.Hora_Inicio "
+                     + "FROM tiquete t "
+                     + "JOIN funcion f ON t.ID_Funcion = f.ID_Funcion "
+                     + "WHERE t.ID_Cliente = ?";
+        PreparedStatement stmt = conn.prepareStatement(query);
+        stmt.setInt(1, idCliente);
+        ResultSet rs = stmt.executeQuery();
+
+        // Limpiar la tabla de compras anteriores
+        DefaultTableModel model = (DefaultTableModel) tblCompras.getModel();
+        model.setRowCount(0);  // Limpiar la tabla antes de agregar nuevos datos
+
+        // Mostrar las compras en la tabla
+        while (rs.next()) {
+            Object[] row = {
+                rs.getString("Asiento"),
+                rs.getInt("Precio"),
+                rs.getInt("Cantidad"),
+                rs.getDate("Fecha"),
+                rs.getTime("Hora_Inicio")
+            };
+            model.addRow(row);  // Agregar cada compra a la tabla
+        }
+
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Error al cargar las compras: " + e.getMessage());
+    }
+
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnVerComprasActionPerformed
 
     /**
      * @param args the command line arguments
