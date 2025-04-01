@@ -5,7 +5,11 @@
 package presentacion;
 import accesoDatos.VistaCarteleraDAO;
 import entidades.VistaCartelera;
+import java.awt.BorderLayout;
+import java.awt.Image;
 import java.util.List;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -22,7 +26,22 @@ public class VistasCartelera extends javax.swing.JFrame {
         initComponents();
         cargarCartelera();
         cargarComboPeliculas();
+         setBackgroundImage();
     }
+    
+     private void setBackgroundImage() {
+        // Ruta de la imagen que deseas usar
+        ImageIcon backgroundImage = new ImageIcon(getClass().getResource("\"C:\\Users\\melin\\OneDrive\\Escritorio\\CINE-MARZO-2023-1.png\""));
+        Image image = backgroundImage.getImage(); // Convertimos la imagen en un objeto Image
+
+        // Establecer la imagen de fondo en el JPanel
+        panelFondo.setLayout(new BorderLayout()) ;  // Usamos BorderLayout para que ocupe toda la ventana
+        panelFondo.add(new JLabel(new ImageIcon(image)), BorderLayout.CENTER);
+        
+        // Establecer el fondo del JFrame como el JPanel con la imagen
+        this.setContentPane(panelFondo);
+    }
+
 
     private void cargarCartelera() {
     try {
@@ -88,6 +107,9 @@ public class VistasCartelera extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(this, "Error al aplicar filtro: " + e.getMessage());
     }
 }
+  }
+    
+
 
 
 
@@ -101,7 +123,7 @@ public class VistasCartelera extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        panelFondo = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         DefaultTableModel = new javax.swing.JTable();
@@ -111,11 +133,11 @@ public class VistasCartelera extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panelFondo.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         jLabel1.setText("Cartelera");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 10, -1, -1));
+        panelFondo.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 10, -1, -1));
 
         DefaultTableModel.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -130,44 +152,50 @@ public class VistasCartelera extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(DefaultTableModel);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 880, 120));
+        panelFondo.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 880, 120));
 
+        jButton3.setBackground(new java.awt.Color(0, 0, 204));
+        jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Menu Principal");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 290, 140, 50));
+        panelFondo.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 290, 140, 50));
 
+        ElejirPelicula.setBackground(new java.awt.Color(0, 51, 204));
+        ElejirPelicula.setForeground(new java.awt.Color(255, 255, 255));
         ElejirPelicula.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Elije tu pelicula" }));
         ElejirPelicula.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 ElejirPeliculaMouseClicked(evt);
             }
         });
-        jPanel1.add(ElejirPelicula, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 180, 230, -1));
+        panelFondo.add(ElejirPelicula, new org.netbeans.lib.awtextra.AbsoluteConstraints(960, 180, 230, -1));
 
+        btnFiltroPelicula1.setBackground(new java.awt.Color(0, 0, 204));
+        btnFiltroPelicula1.setForeground(new java.awt.Color(255, 255, 255));
         btnFiltroPelicula1.setText("Aplicar Filtro");
         btnFiltroPelicula1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnFiltroPelicula1ActionPerformed(evt);
             }
         });
-        jPanel1.add(btnFiltroPelicula1, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 230, 140, 50));
+        panelFondo.add(btnFiltroPelicula1, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 230, 140, 50));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1200, Short.MAX_VALUE)
+                .addComponent(panelFondo, javax.swing.GroupLayout.DEFAULT_SIZE, 1200, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(panelFondo, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 6, Short.MAX_VALUE))
         );
 
@@ -187,7 +215,7 @@ public class VistasCartelera extends javax.swing.JFrame {
     private void btnFiltroPelicula1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFiltroPelicula1ActionPerformed
         aplicarFiltro();
     }//GEN-LAST:event_btnFiltroPelicula1ActionPerformed
-
+   
     /**
      * @param args the command line arguments
      */
@@ -230,7 +258,7 @@ public class VistasCartelera extends javax.swing.JFrame {
     private javax.swing.JButton btnFiltroPelicula1;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel panelFondo;
     // End of variables declaration//GEN-END:variables
 }

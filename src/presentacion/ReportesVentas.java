@@ -4,6 +4,12 @@
  */
 package presentacion;
 
+import accesoDatos.ConexionSQL;
+import java.beans.Statement;
+import java.io.FileOutputStream;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.text.Document;
+
 /**
  *
  * @author contr
@@ -36,12 +42,15 @@ public class ReportesVentas extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(255, 153, 0));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
         jLabel1.setText("Reporte de Venta de Tiquetes");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, -1, -1));
 
+        btnMenu.setBackground(new java.awt.Color(0, 51, 204));
+        btnMenu.setForeground(new java.awt.Color(255, 255, 255));
         btnMenu.setText("Menú Principal");
         btnMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -63,11 +72,20 @@ public class ReportesVentas extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tblReporteVentaTiquetes);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, 910, -1));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 910, -1));
 
+        jButton3.setBackground(new java.awt.Color(0, 51, 204));
+        jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Generar Reporte Ventas");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
         jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 110, 170, 60));
 
+        btnExportar.setBackground(new java.awt.Color(0, 51, 204));
+        btnExportar.setForeground(new java.awt.Color(255, 255, 255));
         btnExportar.setText("Exportar a formato PDF");
         btnExportar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -101,10 +119,75 @@ public class ReportesVentas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMenuActionPerformed
 
     private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarActionPerformed
+        try {
+        // Crear un documento PDF
+        Document document = new Document();
+        PdfWriter.getInstance(document, new FileOutputStream("ReporteVentas.pdf"));
+        document.open();
+
+        // Crear una tabla en el PDF con las mismas columnas que la JTable
+        PdfPTable table = new PdfPTable(tblReporteVentas.getColumnCount());
+        for (int i = 0; i < tblReporteVentas.getColumnCount(); i++) {
+            table.addCell(tblReporteVentas.getColumnName(i)); // Añadir los nombres de las columnas
+        }
+
+        // Añadir los datos de la tabla al PDF
+        DefaultTableModel model = (DefaultTableModel) tblReporteVentas.getModel();
+        for (int i = 0; i < model.getRowCount(); i++) {
+            for (int j = 0; j < model.getColumnCount(); j++) {
+                table.addCell(model.getValueAt(i, j).toString()); // Añadir los valores de las celdas
+            }
+        }
+
+        document.add(table); // Agregar la tabla al documento
+        document.close(); // Cerrar el documento
+
+        // Mensaje de confirmación
+        JOptionPane.showMessageDialog(this, "Reporte exportado a PDF correctamente.");
+    } catch (Exception e) {
+        // Si ocurre algún error
+        JOptionPane.showMessageDialog(this, "Error al generar el PDF: " + e.getMessage());
+    }
+
         MainMenu menu = new MainMenu();
         menu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnExportarActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+
+             // Crear el modelo para la tabla
+          DefaultTableModel model = (DefaultTableModel)tblReporteVentaTiquetes.getModel();
+    model.setRowCount(0); // Limpiar las filas existentes
+
+    try (Connection conn = ConexionSQL.conectar()) {
+        // Realizar la consulta SQL
+        String query = "SELECT v.ID_Venta, v.Fecha_Venta, v.Hora_Venta, v.Total, c.Nombre, c.Apellido, p.Nombre AS Producto "
+                + "FROM venta_snack v "
+                + "JOIN cliente c ON v.ID_Cliente = c.ID_Cliente "
+                + "JOIN producto_snack p ON v.Codigo_Productos = p.Codigo_Producto";
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(query);
+
+        // Procesar los resultados y agregarlos a la tabla
+        while (rs.next()) {
+            Object[] row = {
+                rs.getInt("ID_Venta"),
+                rs.getDate("Fecha_Venta"),
+                rs.getTime("Hora_Venta"),
+                rs.getDouble("Total"),
+                rs.getString("Nombre") + " " + rs.getString("Apellido"),
+                rs.getString("Producto")
+            };
+            model.addRow(row); // Añadir cada fila a la tabla
+        }
+
+    } catch (SQLException e) {
+        System.out.println("Error al consultar la base de datos: " + e.getMessage());
+    }
+
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments

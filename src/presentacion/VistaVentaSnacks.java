@@ -4,6 +4,12 @@
  */
 package presentacion;
 
+import accesoDatos.ConexionSQL;
+import com.sun.jdi.connect.spi.Connection;
+import java.beans.Statement;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author contr
@@ -15,6 +21,30 @@ public class VistaVentaSnacks extends javax.swing.JFrame {
      */
     public VistaVentaSnacks() {
         initComponents();
+        private void cargarSnacks() {
+    DefaultTableModel model = (DefaultTableModel) tblSnacksDisponibles.getModel();
+    model.setRowCount(0); // Limpiar las filas existentes
+
+    try (Connection conn = (Connection) ConexionSQL.conectar()) {
+        // Realizar la consulta SQL
+        String query = "SELECT Codigo_Producto, Nombre, Precio FROM producto_snack";
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(query);
+
+        // Procesar los resultados y agregarlos a la tabla
+        while (rs.next()) {
+            Object[] row = {
+                rs.getString("Codigo_Producto"),
+                rs.getString("Nombre"),
+                rs.getDouble("Precio")
+            };
+            model.addRow(row); // Añadir cada fila a la tabla
+        }
+
+    } catch (SQLException e) {
+        System.out.println("Error al consultar la base de datos: " + e.getMessage());
+    }
+}
     }
 
     /**
@@ -35,22 +65,33 @@ public class VistaVentaSnacks extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(255, 102, 0));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Snacks Vendidos");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 10, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(345, 10, 310, -1));
 
+        jButton2.setBackground(new java.awt.Color(0, 51, 204));
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Menú Principal");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 70, 120, 50));
+        jPanel1.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 70, 120, 50));
 
+        jButton3.setBackground(new java.awt.Color(0, 0, 204));
+        jButton3.setForeground(new java.awt.Color(255, 255, 255));
         jButton3.setText("Cargar Ventas");
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 70, 120, 50));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 70, 120, 50));
 
         tblSnacksVendidos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -86,10 +127,52 @@ public class VistaVentaSnacks extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        MainMenu menu = new MainMenu();
+       // Cerrar la ventana actual (VistaVentaSnack)
+MainMenu menu = new MainMenu();
         menu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+         String codigoProducto = txtCodigoProducto.getText();  // Obtener el código del producto del campo de texto
+     int cantidad = Integer.parseInt(txtCantidad.getText());  // Obtener la cantidad del campo de texto
+        String badgeEmpleado = txtBadgeEmpleado.getText(); // Obtener el badge del empleado
+
+    try (Connection conn = (Connection) ConexionSQL.conectar()) {
+        // Realizar la inserción en la tabla 'venta_snack'
+        String query = "INSERT INTO venta_snack (Fecha_Venta, Hora_Venta, Total, Cantidad, Badge_Empleado_Snacks, Codigo_Productos) "
+                     + "VALUES (GETDATE(), GETDATE(), ?, ?, ?, ?)";
+        PreparedStatement stmt = conn.prepareStatement(query);
+        
+        // Obtener el precio del producto
+        String precioQuery = "SELECT Precio FROM producto_snack WHERE Codigo_Producto = ?";
+        PreparedStatement precioStmt = conn.prepareStatement(precioQuery);
+        precioStmt.setString(1, codigoProducto);
+        ResultSet rs = precioStmt.executeQuery();
+        
+        double precio = 0.0;
+        if (rs.next()) {
+            precio = rs.getDouble("Precio");
+        }
+        
+        // Calcular el total de la venta
+        double total = precio * cantidad;
+        
+        // Insertar la venta en la tabla 'venta_snack'
+        stmt.setDouble(1, total);
+        stmt.setInt(2, cantidad);
+        stmt.setString(3, badgeEmpleado);
+        stmt.setString(4, codigoProducto);
+        stmt.executeUpdate();
+        
+        JOptionPane.showMessageDialog(this, "Venta registrada correctamente.");
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Error al registrar la venta: " + e.getMessage());
+    }
+
+
+// TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
