@@ -74,12 +74,12 @@ private void cargarFunciones() {
 }
         
         private void comprarBoletos() {
-    try {
+      try {
         Connection conn = ConexionSQL.conectar();
-        String query = "INSERT INTO ComprasBoletos (funcion_id, cantidad, total) VALUES (?, ?, ?)";
+        String query = "INSERT INTO compra_tiquete (ID_Funcion, Cantidad, Total) VALUES (?, ?, ?)";
         PreparedStatement stmt = conn.prepareStatement(query);
 
-        int funcionID = Integer.parseInt(cmbFunciones.getSelectedItem().toString().split(" - ")[0]);
+        int funcionID = listaIdFunciones.get(cmbFunciones.getSelectedIndex());
         int cantidad = (int) spnCantidad.getValue();
         double total = cantidad * PRECIO_BOLETO;
 
@@ -241,7 +241,7 @@ private void btnVerComprasActionPerformed(java.awt.event.ActionEvent evt) {
                 cmbFuncionesActionPerformed(evt);
             }
         });
-        jPanel1.add(cmbFunciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, 320, -1));
+        jPanel1.add(cmbFunciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 460, 320, -1));
 
         bntRegresar.setBackground(new java.awt.Color(0, 0, 153));
         bntRegresar.setForeground(new java.awt.Color(255, 255, 255));
