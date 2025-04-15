@@ -35,26 +35,5 @@ public class LogicaLogin implements Login_Servicio {
 
         return resultado;
     }
-    public int obtenerIdCliente(Login login) throws Exception {
-    int id = -1;
-    String passwordEncriptada = new EncriptadorSHA256().encriptarSHA256(login.getContrasena());
-    Connection conn = ConexionSQL.conectar();
-
-    String query = "SELECT ID_Cliente FROM ingreso WHERE usuario = ? AND contrasena = ?";
-    PreparedStatement stmt = conn.prepareStatement(query);
-    stmt.setString(1, login.getUsuario());
-    stmt.setString(2, passwordEncriptada);
-    ResultSet rs = stmt.executeQuery();
-
-    if (rs.next()) {
-        id = rs.getInt("ID_Cliente");
-    }
-
-    rs.close();
-    stmt.close();
-    conn.close();
-
-    return id;
-}
-    
+   
 }

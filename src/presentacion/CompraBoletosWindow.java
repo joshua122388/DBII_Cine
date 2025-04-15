@@ -74,23 +74,35 @@ private void cargarFunciones() {
 }
         
         private void comprarBoletos() {
-      try {
+       try {
         Connection conn = ConexionSQL.conectar();
-        String query = "INSERT INTO compra_tiquete (ID_Funcion, Cantidad, Total) VALUES (?, ?, ?)";
-        PreparedStatement stmt = conn.prepareStatement(query);
 
+        // Compra Tiquete
+        String queryCompra = "{CALL sp_insertar_compra_tiquete(?, ?, ?)}";
+        CallableStatement stmtCompra = conn.prepareCall(queryCompra);
         int funcionID = listaIdFunciones.get(cmbFunciones.getSelectedIndex());
         int cantidad = (int) spnCantidad.getValue();
         double total = cantidad * PRECIO_BOLETO;
+        stmtCompra.setInt(1, funcionID);
+        stmtCompra.setInt(2, cantidad);
+        stmtCompra.setDouble(3, total);
+        stmtCompra.execute();
+        stmtCompra.close();
 
-        stmt.setInt(1, funcionID);
-        stmt.setInt(2, cantidad);
-        stmt.setDouble(3, total);
-        stmt.executeUpdate();
+        // Registro Tiquete
+        String queryTiquete = "{CALL sp_insertar_tiquete(?, ?, ?, ?)}";
+        CallableStatement stmtTiquete = conn.prepareCall(queryTiquete);
+        String asiento = txtAsiento.getText();
+        stmtTiquete.setString(1, asiento);
+        stmtTiquete.setDouble(2, PRECIO_BOLETO);
+        stmtTiquete.setInt(3, cantidad);
+        stmtTiquete.setInt(4, idCliente);
+        stmtTiquete.execute();
+        stmtTiquete.close();
 
-        JOptionPane.showMessageDialog(this, "Boletos comprados exitosamente.");
-        stmt.close();
         conn.close();
+        JOptionPane.showMessageDialog(this, "Compra realizada correctamente (vía SP).");
+
     } catch (SQLException ex) {
         JOptionPane.showMessageDialog(this, "Error al comprar boletos: " + ex.getMessage());
     }
@@ -153,6 +165,9 @@ private void btnVerComprasActionPerformed(java.awt.event.ActionEvent evt) {
         btnCartelera1 = new javax.swing.JButton();
         cmbFunciones = new javax.swing.JComboBox<>();
         bntRegresar = new javax.swing.JButton();
+        lblAsiento = new javax.swing.JLabel();
+        txtAsiento = new javax.swing.JTextField();
+        txtTotal = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -173,7 +188,7 @@ private void btnVerComprasActionPerformed(java.awt.event.ActionEvent evt) {
         jPanel1.add(lblCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 140, -1, -1));
 
         lblTotal.setText("Total:");
-        jPanel1.add(lblTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 200, -1, -1));
+        jPanel1.add(lblTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 190, -1, -1));
 
         btnAsiento.setBackground(new java.awt.Color(0, 0, 153));
         btnAsiento.setForeground(new java.awt.Color(255, 255, 255));
@@ -241,7 +256,7 @@ private void btnVerComprasActionPerformed(java.awt.event.ActionEvent evt) {
                 cmbFuncionesActionPerformed(evt);
             }
         });
-        jPanel1.add(cmbFunciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 460, 320, -1));
+        jPanel1.add(cmbFunciones, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 460, 320, -1));
 
         bntRegresar.setBackground(new java.awt.Color(0, 0, 153));
         bntRegresar.setForeground(new java.awt.Color(255, 255, 255));
@@ -252,6 +267,11 @@ private void btnVerComprasActionPerformed(java.awt.event.ActionEvent evt) {
             }
         });
         jPanel1.add(bntRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 460, -1, -1));
+
+        lblAsiento.setText("Asiento:");
+        jPanel1.add(lblAsiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 220, -1, -1));
+        jPanel1.add(txtAsiento, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 220, -1, -1));
+        jPanel1.add(txtTotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 190, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 620, 510));
 
@@ -442,11 +462,14 @@ private void btnVerComprasActionPerformed(java.awt.event.ActionEvent evt) {
     private javax.swing.JComboBox<String> cmbFunciones;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblAsiento;
     private javax.swing.JLabel lblCantidad;
     private javax.swing.JLabel lblCompraboletostitle;
     private javax.swing.JLabel lblFunciones;
     private javax.swing.JLabel lblTotal;
     private javax.swing.JSpinner spnCantidad;
     private javax.swing.JTable tblCompras;
+    private javax.swing.JTextField txtAsiento;
+    private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables
 }

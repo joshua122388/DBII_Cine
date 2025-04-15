@@ -75,24 +75,27 @@ DefaultTableModel model = new DefaultTableModel(
 
          
 private void agregarCliente() {
-    try {
+     try {
         Connection conn = ConexionSQL.conectar();
-        String query = "INSERT INTO Cliente (Nombre, Correo, Telefono) VALUES (?, ?, ?)";
-        PreparedStatement stmt = conn.prepareStatement(query);
+        String query = "{CALL sp_insertar_cliente(?, ?, ?, ?)}";
+        CallableStatement stmt = conn.prepareCall(query);
+
         stmt.setString(1, txtNombreCliente.getText());
         stmt.setString(2, txtCorreoCliente.getText());
-        stmt.setString(3, txtIDMembresia.getText());
-        stmt.executeUpdate();
+        stmt.setString(3, txtIDMembresia.getText()); // Este es tu campo "Teléfono"
+        stmt.setInt(4, 1); // ID_Membresia fijo por ahora, podés ajustarlo si es editable
 
-        JOptionPane.showMessageDialog(this, "Cliente agregado correctamente.");
+        stmt.execute();
+        JOptionPane.showMessageDialog(this, "Cliente agregado exitosamente (vía SP).");
+
         stmt.close();
         conn.close();
-        cargarClientes(); // Recargar datos
+        cargarClientes();
     } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(this, "Error al agregar cliente: " + ex.getMessage());
+        JOptionPane.showMessageDialog(this, "Error al agregar cliente con SP: " + ex.getMessage());
     }
 }
-              
+             
 private void actualizarCliente() {
     try {
         Connection conn = ConexionSQL.conectar();
