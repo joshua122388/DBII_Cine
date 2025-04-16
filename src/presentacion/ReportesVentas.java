@@ -5,11 +5,18 @@
 package presentacion;
 
 import accesoDatos.ConexionSQL;
+import com.sun.jdi.connect.spi.Connection;
 import java.beans.Statement;
 import java.io.FileOutputStream;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.Document;
-
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.text.pdf.PdfPTable;
 /**
  *
  * @author contr
@@ -37,7 +44,7 @@ public class ReportesVentas extends javax.swing.JFrame {
         btnMenu = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblReporteVentaTiquetes = new javax.swing.JTable();
-        jButton3 = new javax.swing.JButton();
+        btnVerReporte = new javax.swing.JButton();
         btnExportar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -74,19 +81,19 @@ public class ReportesVentas extends javax.swing.JFrame {
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 910, -1));
 
-        jButton3.setBackground(new java.awt.Color(0, 51, 204));
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("Generar Reporte Ventas");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnVerReporte.setBackground(new java.awt.Color(0, 51, 204));
+        btnVerReporte.setForeground(new java.awt.Color(255, 255, 255));
+        btnVerReporte.setText("Ver Reporte Ventas");
+        btnVerReporte.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnVerReporteActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 110, 170, 60));
+        jPanel1.add(btnVerReporte, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 110, 170, 60));
 
         btnExportar.setBackground(new java.awt.Color(0, 51, 204));
         btnExportar.setForeground(new java.awt.Color(255, 255, 255));
-        btnExportar.setText("Exportar a formato PDF");
+        btnExportar.setText("Exportar a formato Excel");
         btnExportar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExportarActionPerformed(evt);
@@ -119,75 +126,73 @@ public class ReportesVentas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMenuActionPerformed
 
     private void btnExportarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExportarActionPerformed
-        try {
-        // Crear un documento PDF
-        Document document = new Document();
-        PdfWriter.getInstance(document, new FileOutputStream("ReporteVentas.pdf"));
-        document.open();
+     try {
+        org.apache.poi.ss.usermodel.Workbook workbook = new org.apache.poi.xssf.usermodel.XSSFWorkbook();
+        org.apache.poi.ss.usermodel.Sheet sheet = workbook.createSheet("Reporte de Ventas");
 
-        // Crear una tabla en el PDF con las mismas columnas que la JTable
-        PdfPTable table = new PdfPTable(tblReporteVentas.getColumnCount());
-        for (int i = 0; i < tblReporteVentas.getColumnCount(); i++) {
-            table.addCell(tblReporteVentas.getColumnName(i)); // Añadir los nombres de las columnas
+        // Encabezados
+        org.apache.poi.ss.usermodel.Row headerRow = sheet.createRow(0);
+        for (int i = 0; i < tblReporteVentaTiquetes.getColumnCount(); i++) {
+            headerRow.createCell(i).setCellValue(tblReporteVentaTiquetes.getColumnName(i));
         }
 
-        // Añadir los datos de la tabla al PDF
-        DefaultTableModel model = (DefaultTableModel) tblReporteVentas.getModel();
-        for (int i = 0; i < model.getRowCount(); i++) {
-            for (int j = 0; j < model.getColumnCount(); j++) {
-                table.addCell(model.getValueAt(i, j).toString()); // Añadir los valores de las celdas
+        // Datos
+        for (int i = 0; i < tblReporteVentaTiquetes.getRowCount(); i++) {
+            org.apache.poi.ss.usermodel.Row row = sheet.createRow(i + 1);
+            for (int j = 0; j < tblReporteVentaTiquetes.getColumnCount(); j++) {
+                Object value = tblReporteVentaTiquetes.getValueAt(i, j);
+                row.createCell(j).setCellValue(value != null ? value.toString() : "");
             }
         }
 
-        document.add(table); // Agregar la tabla al documento
-        document.close(); // Cerrar el documento
+        java.io.FileOutputStream fileOut = new java.io.FileOutputStream("ReporteVentasTiquetes.xlsx");
+        workbook.write(fileOut);
+        fileOut.close();
+        workbook.close();
 
-        // Mensaje de confirmación
-        JOptionPane.showMessageDialog(this, "Reporte exportado a PDF correctamente.");
-    } catch (Exception e) {
-        // Si ocurre algún error
-        JOptionPane.showMessageDialog(this, "Error al generar el PDF: " + e.getMessage());
+        JOptionPane.showMessageDialog(this, "Excel exportado como 'ReporteVentasTiquetes.xlsx'");
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error al exportar Excel: " + ex.getMessage());
     }
+
 
         MainMenu menu = new MainMenu();
         menu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnExportarActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void btnVerReporteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVerReporteActionPerformed
+        ry {
+        Connection conn = (Connection) ConexionSQL.conectar();
+        String query = "SELECT * FROM vw_reporte_venta_tiquetes";
+        PreparedStatement stmt = conn.prepareStatement(query);
+        ResultSet rs = stmt.executeQuery();
 
-             // Crear el modelo para la tabla
-          DefaultTableModel model = (DefaultTableModel)tblReporteVentaTiquetes.getModel();
-    model.setRowCount(0); // Limpiar las filas existentes
+        DefaultTableModel model = new DefaultTableModel(
+            new Object[]{"ID_Compra", "Cantidad", "Fecha_Compra", "ID_Funcion", "Pelicula", "Sala"}, 0
+        );
 
-    try (Connection conn = ConexionSQL.conectar()) {
-        // Realizar la consulta SQL
-        String query = "SELECT v.ID_Venta, v.Fecha_Venta, v.Hora_Venta, v.Total, c.Nombre, c.Apellido, p.Nombre AS Producto "
-                + "FROM venta_snack v "
-                + "JOIN cliente c ON v.ID_Cliente = c.ID_Cliente "
-                + "JOIN producto_snack p ON v.Codigo_Productos = p.Codigo_Producto";
-        Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery(query);
-
-        // Procesar los resultados y agregarlos a la tabla
         while (rs.next()) {
-            Object[] row = {
-                rs.getInt("ID_Venta"),
-                rs.getDate("Fecha_Venta"),
-                rs.getTime("Hora_Venta"),
-                rs.getDouble("Total"),
-                rs.getString("Nombre") + " " + rs.getString("Apellido"),
-                rs.getString("Producto")
-            };
-            model.addRow(row); // Añadir cada fila a la tabla
+            model.addRow(new Object[]{
+                rs.getInt("ID_Compra"),
+                rs.getInt("Cantidad"),
+                rs.getDate("Fecha_Compra"),
+                rs.getInt("ID_Funcion"),
+                rs.getString("Pelicula"),
+                rs.getInt("Sala")
+            });
         }
 
-    } catch (SQLException e) {
-        System.out.println("Error al consultar la base de datos: " + e.getMessage());
-    }
+        tblReporteVentaTiquetes.setModel(model);
 
+        rs.close();
+        stmt.close();
+        conn.close();
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Error al cargar el reporte: " + ex.getMessage());
+    }
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_btnVerReporteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -228,7 +233,7 @@ public class ReportesVentas extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnExportar;
     private javax.swing.JButton btnMenu;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton btnVerReporte;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
